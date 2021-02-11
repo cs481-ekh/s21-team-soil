@@ -28,3 +28,7 @@ jobs:
       run: |
         chmod +x ./test.sh
         ./test.sh
+    - name: Run clean.sh
+      run: |
+        chmod +x ./clean.sh
+        ./clean.sh
