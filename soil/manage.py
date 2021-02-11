@@ -3,6 +3,8 @@
 import os
 import sys
 
+from soil import tests
+
 
 def main():
     """Run administrative tasks."""
@@ -19,4 +21,5 @@ def main():
 
 
 if __name__ == '__main__':
+    tests.unit_test_placeholder()
     main()
