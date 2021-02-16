@@ -10,7 +10,6 @@ python -m pip install Django
 echo "Running Django Migrations"
 python soil/manage.py migrate
 
-echo "Starting up the application"
-python soil/manage.py runserver
+echo "Build success. Run the command 'python soil/manage.py runserver' to run the webserver locally in a browser."
 
 exit 0
