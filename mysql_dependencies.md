@@ -14,7 +14,7 @@ The following is needed for MySQL to work with Django.
     - Run the following command to create a database for the project(include semicolon): CREATE DATABASE soil_dev;
     - You can check the database was created with the command: SHOW DATABASES;
     - Now create a designated user that Django will use when interacting with the MySQL server. 
-Run the following two commands in order
+    - Run the following two commands in order.
     - CREATE USER 'django_priv'@'%' IDENTIFIED WITH mysql_native_password BY '2468';
     - GRANT ALL ON soil_dev.* TO 'django_priv'@'%';
     - FLUSH PRIVILEGES;
@@ -26,4 +26,4 @@ Run the following two commands in order
     - You should see the default Django landing page upon success.
 
 # Debugging
-    - Contact Brandon Contreras at brandoncontreras@u.boisestate.edu or message me in Slack if you have any troubles getting MySQL to work with Django
+- Contact Brandon Contreras at brandoncontreras@u.boisestate.edu or message me in Slack if you have any troubles getting MySQL to work with Django
