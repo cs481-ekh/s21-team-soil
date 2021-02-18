@@ -8,7 +8,6 @@ python -m pip install --upgrade Django
 
 echo "Running PyLint"
 pylint src
-if [[ $? -eq 1 ]]; then exit 1;
 
 echo "Running Django Migrations"
 python src/manage.py migrate || { echo "migrate failed"; exit 1; }
