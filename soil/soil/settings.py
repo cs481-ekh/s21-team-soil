@@ -25,7 +25,7 @@ SECRET_KEY = '5w7y!mnrrna$@5j3g!s!t%6j%7!qobtq388o4(_t6wep9h(!4h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -74,9 +74,21 @@ WSGI_APPLICATION = 'soil.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
+  #  'default': {
+   #     'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': BASE_DIR / 'db.sqlite3',
+    #} 
+
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'soil_dev',
+        'USER': 'django_priv',
+        'PASSWORD': '2468',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS' : {
+            'charset': 'utf8mb4'
+        }
     }
 }
 
