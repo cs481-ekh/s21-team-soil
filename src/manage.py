@@ -3,7 +3,7 @@
 import os
 import sys
 
-from soil import tests
+from so il import tests
 
 
 def main():

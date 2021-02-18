@@ -6,9 +6,9 @@ python -m pip install --upgrade pylint
 if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 python -m pip install --upgrade Django
 
-# TODO: Get return code
 echo "Running PyLint"
 pylint src
+if [[ $? -eq 1 ]]; then exit 1;
 
 echo "Running Django Migrations"
 python src/manage.py migrate || { echo "migrate failed"; exit 1; }
