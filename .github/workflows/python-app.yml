@@ -5,9 +5,9 @@ name: Python application
 
 on:
   push:
-    branches: [ main, garrett ]
+    branches: [ main, garrett, WebUI-main, brandon ]
   pull_request:
-    branches: [ main, garrett ]
+    branches: [ main, garrett, WebUI-main, brandon ]
 
 jobs:
   build:
@@ -24,11 +24,19 @@ jobs:
       run: |
         chmod +x ./build.sh
         ./build.sh
-    - name: Run test.sh
-      run: |
-        chmod +x ./test.sh
-        ./test.sh
     - name: Run clean.sh
       run: |
         chmod +x ./clean.sh
         ./clean.sh
+        
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        python-version: 3.9
+    - name: Run test.sh
+      run: |
+        chmod +x ./test.sh
+        ./test.sh
