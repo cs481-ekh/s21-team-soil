@@ -8,7 +8,7 @@ python -m pip install --upgrade Django || { echo "Django install failed"; exit 1
 
 # PyLint will automatically output an exit code to stderr, so sending exit codes here isn't necessary.
 echo "Running PyLint"
-pylint src || { echo "pylint failed"; exit 1; }
+pylint -d C src || { echo "pylint failed"; exit 1; }
 
 echo "Running Django Migrations"
 python src/manage.py migrate || { echo "migrate failed"; exit 1; }
