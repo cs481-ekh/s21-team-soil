@@ -1,2 +1,5 @@
+"""The module where unit tests will be ran for our project"""
+
 def unit_test_placeholder():
-    pass
+    """An empty test. Needs replacement with actual tests."""
+    # pass
