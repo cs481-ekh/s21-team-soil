@@ -5,7 +5,7 @@ python -m pip install --upgrade pip
 python -m pip install --upgrade pylint
 if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 python -m pip install --upgrade Django
-python -m pip install --upgrade mysqlclient
+python -m pip install --upgrade mysqlclient || { echo "Mysql client install failed"; exit 1; }
 
 # PyLint will automatically output an exit code to stderr, so sending exit codes here isn't necessary.
 echo "Running PyLint"
