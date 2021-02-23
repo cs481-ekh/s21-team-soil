@@ -79,12 +79,27 @@ DATABASES = {
     #    'NAME': BASE_DIR / 'db.sqlite3',
     #} 
 
+
+    # Use this connection if you wish to only use/test on your local MySQL server instance.
+    #'default': {
+    #    'ENGINE': 'django.db.backends.mysql',
+     #   'NAME': 'soil_dev',
+      #  'USER': 'django_priv',
+       # 'PASSWORD': '2468',
+        #'HOST': 'localhost',
+        #'PORT': '3306',
+        #'OPTIONS' : {
+         #   'charset': 'utf8mb4'
+        #}
+   # }
+
+    # AWS hosted MySQL server
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'soil_dev',
-        'USER': 'django_priv',
-        'PASSWORD': '2468',
-        'HOST': 'localhost',
+        'NAME': 'dev_box',
+        'USER': 'djangouser',
+        'PASSWORD': 'earth828',
+        'HOST': 'soil-dev-aws.cm1fekzgqprt.us-east-2.rds.amazonaws.com',
         'PORT': '3306',
         'OPTIONS' : {
             'charset': 'utf8mb4'
