@@ -6,23 +6,28 @@ from .models import Soil
 from .serializers import *
 
 @api_view(['GET', 'POST'])
-def soils_list(request):
-    if request.method == 'GET':
-        data = Soil.objects.all()
+def soil_sample(request):
 
-        serializer = SoilSerializer(data, context={'request': request}, many=True)
+    #if request.method == 'GET':
+        # data = Soil.objects.all()
 
-        return Response(serializer.data)
+        # serializer = SoilSerializer(data, context={'request': request}, many=True)
 
-    elif request.method == 'POST':
+        # return Response(serializer.data)
+
+        # To be implemented later
+     #   return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    if request.method == 'POST':
         serializer = SoilSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(status=status.HTTP_201_CREATED)
+            return Response(request.data, status=status.HTTP_201_CREATED)
+            #return Response(request """status=status.HTTP_201_CREATED""")
             
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(request.data, status=status.HTTP_201_CREATED)
 
-@api_view(['PUT', 'DELETE'])
+"""@api_view(['PUT', 'DELETE'])
 def soils_detail(request, pk):
     try:
         soil = Soil.objects.get(pk=pk)
@@ -38,4 +43,4 @@ def soils_detail(request, pk):
 
     elif request.method == 'DELETE':
         soil.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)"""
