@@ -25,7 +25,7 @@ SECRET_KEY = '5w7y!mnrrna$@5j3g!s!t%6j%7!qobtq388o4(_t6wep9h(!4h'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -74,9 +74,34 @@ WSGI_APPLICATION = 'soil.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
+  #  'default': {
+   #     'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': BASE_DIR / 'db.sqlite3',
+    #}
+    # Use this connection if you wish to only use/test on your local MySQL server instance.
+    #'default': {
+    #    'ENGINE': 'django.db.backends.mysql',
+     #   'NAME': 'soil_dev',
+      #  'USER': 'django_priv',
+       # 'PASSWORD': '2468',
+        #'HOST': 'localhost',
+        #'PORT': '3306',
+        #'OPTIONS' : {
+         #   'charset': 'utf8mb4'
+        #}
+   # }
+
+    # AWS hosted MySQL server
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dev_box',
+        'USER': 'djangouser',
+        'PASSWORD': 'earth828',
+        'HOST': 'soil-dev-aws.cm1fekzgqprt.us-east-2.rds.amazonaws.com',
+        'PORT': '3306',
+        'OPTIONS' : {
+            'charset': 'utf8mb4'
+        }
     }
 }
 

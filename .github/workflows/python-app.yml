@@ -5,9 +5,9 @@ name: Python application
 
 on:
   push:
-    branches: [ main, garrett, WebUI-main, brandon ]
+    branches: [ main, garrett, WebUI-main, brandon, google-auth ]
   pull_request:
-    branches: [ main, garrett, WebUI-main, brandon ]
+    branches: [ main, garrett, WebUI-main, brandon, google-auth ]
 
 jobs:
   build:
