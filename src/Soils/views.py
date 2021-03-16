@@ -5,6 +5,12 @@ from rest_framework import status
 from .models import Soil
 from .serializers import *
 
+import json
+
+import rpy2
+from rpy2.rinterface import R_VERSION_BUILD
+from rpy2.rinterface import R_VERSION_BUILD
+
 @api_view(['GET', 'POST'])
 def soil_sample(request):
 
