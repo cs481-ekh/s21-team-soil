@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # Test app
-    'Soils',
+    'soil_samples',
 ]
 
 MIDDLEWARE = [

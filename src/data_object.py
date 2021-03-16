@@ -1,4 +1,4 @@
-class Soil_Object:
+class soil_object:
     """dataFile
     liquidLimit
     plasticIndex

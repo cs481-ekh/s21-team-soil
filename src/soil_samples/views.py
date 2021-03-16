@@ -2,14 +2,13 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
-from .models import Soil
+from .models import soil_sample
 from .serializers import *
 
 import json
 
-import rpy2
-from rpy2.rinterface import R_VERSION_BUILD
-from rpy2.rinterface import R_VERSION_BUILD
+#import rpy2
+#from rpy2.rinterface import R_VERSION_BUILD
 
 @api_view(['GET', 'POST'])
 def soil_sample(request):
@@ -25,12 +24,12 @@ def soil_sample(request):
      #   return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'POST':
-        serializer = SoilSerializer(data=request.data)
+        serializer = soilserializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             # parse request.data
             data = json.load(request.data)
-            soil = Soil_Object(data['dataFile'], data['liquidLimit'], data['plasticIndex'], data['clayPercent'], data['siltPercent'], data['sandPercent'], data['organicContent'], data['limeCementStabilize'], data['limeCementDose'], data['quantResult'], data['qualResult'])
+            soil = soil_object(data['dataFile'], data['liquidLimit'], data['plasticIndex'], data['clayPercent'], data['siltPercent'], data['sandPercent'], data['organicContent'], data['limeCementStabilize'], data['limeCementDose'], data['quantResult'], data['qualResult'])
             
             #soil = Soil_Object(data.dataFile, data.liquidLimit, data.plasticIndex, data.clayPercent, data.siltPercent, data.sandPercent, data.organicContent, data.limeCementStabilize, data.limeCementDose, data.quantResult, data.qualResult)
 

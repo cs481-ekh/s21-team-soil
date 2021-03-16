@@ -1,8 +1,8 @@
 from rest_framework import serializers
-from .models import Soil
+from .models import soil_sample
 
-class SoilSerializer(serializers.ModelSerializer):
+class soilserializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Soil
+        model = soil_sample
         fields = ('pk', 'lime_or_cement_stabilization', 'dose_of_lime_or_cement')
