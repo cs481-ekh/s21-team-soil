@@ -1,5 +1,5 @@
 class Soil_Object:
-    dataFile
+    """dataFile
     liquidLimit
     plasticIndex
     clayPercent
@@ -9,7 +9,7 @@ class Soil_Object:
     limeCementStabilize
     limeCementDose
     quantResult
-    qualResult
+    qualResult"""
 
     def __init__(self, dataFile, liquidLimit, plasticIndex, clayPercent, siltPercent, sandPercent, organicContent, limeCementStabilize, limeCementDose, quantResult, qualResult):
         self.dataFile = dataFile

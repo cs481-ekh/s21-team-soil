@@ -22,6 +22,13 @@ def soil_sample(request):
         serializer = SoilSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            # parse request.data
+            data = json.load(request.data)
+            soil = Soil_Object(data['dataFile'], data['liquidLimit'], data['plasticIndex'], data['clayPercent'], data['siltPercent'], data['sandPercent'], data['organicContent'], data['limeCementStabilize'], data['limeCementDose'], data['quantResult'], data['qualResult'])
+            
+            #soil = Soil_Object(data.dataFile, data.liquidLimit, data.plasticIndex, data.clayPercent, data.siltPercent, data.sandPercent, data.organicContent, data.limeCementStabilize, data.limeCementDose, data.quantResult, data.qualResult)
+
+            #soil = Soil_Object(dataFile, liquidLimit, plasticIndex, clayPercent, siltPercent, sandPercent, organicContent, limeCementStabilize, limeCementDose, quantResult, qualResult)
             return Response(request.data, status=status.HTTP_201_CREATED)
             #return Response(request """status=status.HTTP_201_CREATED""")
             
