@@ -1,0 +1,33 @@
+.header {
+  background-color: #707070;
+  padding: 20px;
+  color: #3366FF;
+}
+
+.title {
+  font-size: x-large;
+  padding: 20px;
+  color: #3366FF;
+  text-align: center;
+}
+
+.website-page {
+  height: '100vh';
+  min-height: '100vh';
+  position: relative;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: #B0B0B0;
+}
+
+.home-page {
+  background-color: #B0B0B0;
+}
+
+h2 {
+  text-align: center;
+  color: black;
+}
