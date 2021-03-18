@@ -2,9 +2,6 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
 
-from .models import soil_sample
-from .serializers import *
-
 from io import BytesIO
 from django.http import FileResponse
 from reportlab.pdfgen import canvas
@@ -14,13 +11,18 @@ from reportlab.platypus import Paragraph
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib.styles import ParagraphStyle
 
+
+from .models import soil_sample
+from .serializers import *
+
+
 import json
 
 #import rpy2
 #from rpy2.rinterface import R_VERSION_BUILD
 
 @api_view(['GET', 'POST'])
-def soil_sample(request):
+def insert_soil_sample(request):
 
     #if request.method == 'GET':
         # data = Soil.objects.all()
@@ -87,20 +89,20 @@ def report(request):
     # return the buffer as a file response
     return FileResponse(buffer, as_attachment=True, filename="Geo_Report.pdf", content_type="application/pdf", status=status.HTTP_200_OK)
 
-"""@api_view(['PUT', 'DELETE'])
-def soils_detail(request, pk):
-    try:
-        soil = Soil.objects.get(pk=pk)
-    except Soil.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
-    if request.method == 'PUT':
-        serializer = SoilSerializer(soil, data=request.data,context={'request': request})
-        if serializer.is_valid():
-            serializer.save()
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    elif request.method == 'DELETE':
-        soil.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)"""
+#@api_view(['PUT', 'DELETE'])
+#def soils_detail(request, pk):
+#    try:
+#        soil = Soil.objects.get(pk=pk)
+#    except Soil.DoesNotExist:
+#        return Response(status=status.HTTP_404_NOT_FOUND)
+#
+#    if request.method == 'PUT':
+#        serializer = SoilSerializer(soil, data=request.data,context={'request': request})
+#        if serializer.is_valid():
+#            serializer.save()
+#            return Response(status=status.HTTP_204_NO_CONTENT)
+#        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#
+#    elif request.method == 'DELETE':
+#        soil.delete()
+#        return Response(status=status.HTTP_204_NO_CONTENT)

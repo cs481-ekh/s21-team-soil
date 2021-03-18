@@ -1,3 +1,7 @@
+
+"""
+
+"""
 class soil_object:
     """dataFile
     liquidLimit
@@ -11,7 +15,8 @@ class soil_object:
     quantResult
     qualResult"""
 
-    def __init__(self, dataFile, liquidLimit, plasticIndex, clayPercent, siltPercent, sandPercent, organicContent, limeCementStabilize, limeCementDose, quantResult, qualResult):
+    def __init__(self, dataFile, liquidLimit, plasticIndex, clayPercent, siltPercent, sandPercent,
+                organicContent, limeCementStabilize, limeCementDose, quantResult, qualResult):
         self.dataFile = dataFile
         self.liquidLimit = liquidLimit 
         self.plasticIndex = plasticIndex
@@ -24,91 +29,91 @@ class soil_object:
         self.quantResult = quantResult
         self.qualResult = qualResult
 
-    def setDataFile(data):
-        dataFile = data
-        return dataFile
+    def setDataFile(self, data):
+        self.dataFile = data
+        return self.dataFile
 
-    def getDataFile():
+    def getDataFile(self):
 
-        return dataFile
-
-
-    def setLiquidLimit(ll):
-        liquidLimit = ll
-        return liquidLimit
-
-    def getLiquidLimit():
-
-        return liquidLimit
+        return self.dataFile
 
 
-    def setPlasticIndex(pl):
-        plasticIndex = pl
-        return plasticIndex
+    def setLiquidLimit(self, ll):
+        self.liquidLimit = ll
+        return self.liquidLimit
 
-    def getPlasticIndex():
+    def getLiquidLimit(self):
 
-        return plasticIndex
-
-
-    def setClayPercent(cp):
-        clayPercent = cp
-        return clayPercent
-
-    def getClayPercent():
-
-        return clayPercent
+        return self.liquidLimit
 
 
-    def setSandPercent(sp):
-        sandPercent = sp
-        return sandPercent
+    def setPlasticIndex(self, pl):
+        self.plasticIndex = pl
+        return self.plasticIndex
 
-    def getSandPercent():
+    def getPlasticIndex(self):
 
-        return sandPercent
-
-
-    def setOrganicContent(oc):
-        organicContent = oc
-        return organicContent
-
-    def getOrganicContent():
-
-        return organicContent
+        return self.plasticIndex
 
 
-    def setLimeCementStabilize(lcs):
-        limeCementStabilize = lcs
-        return limeCementStabilize
+    def setClayPercent(self, cp):
+        self.clayPercent = cp
+        return self.clayPercent
 
-    def getLimeCementStabilize():
+    def getClayPercent(self):
 
-        return limeCementStabilize
-
-
-    def setLimeCementDose(lcd):
-        limeCementDose = lcd
-        return limeCementDose
-
-    def getLimeCementDose():
-
-        return limeCementDose
+        return self.clayPercent
 
 
-    def setQuantResult(quantr):
-        quantResult = quantr
-        return quantResult
+    def setSandPercent(self, sp):
+        self.sandPercent = sp
+        return self.sandPercent
 
-    def getQuantResult():
+    def getSandPercent(self):
 
-        return quantResult
+        return self.sandPercent
 
 
-    def setQualResult(qualr):
-        qualResult = qualr
-        return qualResult
+    def setOrganicContent(self, oc):
+        self.organicContent = oc
+        return self.organicContent
 
-    def getQualResult():
+    def getOrganicContent(self):
 
-        return qualResult
+        return self.organicContent
+
+
+    def setLimeCementStabilize(self, lcs):
+        self.limeCementStabilize = lcs
+        return self.limeCementStabilize
+
+    def getLimeCementStabilize(self):
+
+        return self.limeCementStabilize
+
+
+    def setLimeCementDose(self, lcd):
+        self.limeCementDose = lcd
+        return self.limeCementDose
+
+    def getLimeCementDose(self):
+
+        return self.limeCementDose
+
+
+    def setQuantResult(self, quantr):
+        self.quantResult = quantr
+        return self.quantResult
+
+    def getQuantResult(self):
+
+        return self.quantResult
+
+
+    def setQualResult(self, qualr):
+        self.qualResult = qualr
+        return self.qualResult
+
+    def getQualResult(self):
+
+        return self.qualResult

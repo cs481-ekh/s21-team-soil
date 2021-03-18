@@ -1,5 +1,8 @@
 #!/bin/bash
-
+#exec 3>&1 4>&2
+#trap 'exec 2>&4 1>&3' 0 1 2 3
+#exec 1>log.out 2>&1
+# Everything below will go to the file 'log.out':
 echo "Installing Dependencies"
 python -m pip install --upgrade pip || { echo "pip install failed"; exit 1; }
 python -m pip install --upgrade pylint || { echo "Pylint install failed"; exit 1; }
@@ -11,7 +14,7 @@ python -m pip install --upgrade django-cors-headers || { echo "CORS app install 
 python -m pip install --upgrade rpy2 || { echo "RPY2 framework imstall failed"; exit 1; }
 
 echo "Running PyLint"
-pylint -d C0415 src || { echo "pylint failed"; exit 1; }
+pylint -d R,C,wildcard-import,undefined-variable,unused-variable,unused-import,unused-import,unused-wildcard-import src || { echo "pylint failed"; exit 1; }
 
 echo "Running Django Migrations"
 python src/manage.py migrate || { echo "migrate failed"; exit 1; }
