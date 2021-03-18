@@ -14,8 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, re_path
+from soil_samples import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('report/', views.report),
+    re_path(r'^api/insert_soil_sample/$', views.insert_soil_sample),
 ]
