@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import "./main.css";
+
 import {
   Route,
   NavLink,
@@ -10,19 +12,25 @@ import Form from "./Form";
 class Main extends Component {
   render() {
     return (
+      <div>
         <HashRouter>
                 <div>
-                  <h1>Soil Stabilizer</h1>
-                  <ul className="header">
-                    <li><NavLink to="/">Home</NavLink></li>
-                    <li><NavLink to="/form">Form</NavLink></li>
-                  </ul>
+                  <div className="title">
+                    <h1>Soil Stabilizer Computation Tool</h1>
+                  </div>
+                    <div class="textstyle">
+                     <NavLink to="/">Home</NavLink>
+                     </div>
+                     <div className="textstyle">
+                    <NavLink to="/form">Form</NavLink>
+                    </div>
                   <div className="content">
                     <Route exact path="/" component={Home}/>
                     <Route path="/form" component={Form}/>
                   </div>
                 </div>
         </HashRouter>
+      </div>
     );
   }
 }

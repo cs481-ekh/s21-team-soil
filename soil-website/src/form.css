@@ -1,0 +1,9 @@
+.center-border {
+  margin: auto;
+  width: 40%;
+  border: 2px solid black;
+}
+
+.margin {
+  margin: 10px;
+}
