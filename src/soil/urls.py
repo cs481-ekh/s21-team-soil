@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from soil_samples import views
+from soil.soil_samples import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
