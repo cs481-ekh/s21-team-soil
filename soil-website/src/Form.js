@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import ExcelReader from './ExcelReader';
+import "./form.css"
 
 class Form extends React.Component {
     constructor(props) {
@@ -38,7 +39,8 @@ class Form extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="center-border">
+              <div className="margin">
                 <ExcelReader/>
                 <br />
                 <form onSubmit={this.handleSubmit}>
@@ -48,7 +50,7 @@ class Form extends React.Component {
                             name="liquidLimit"
                             type="number"
                             value={this.state.liquidLimit}
-                            max="100"
+                            max="3"
                             onChange={this.handleInputChange} />
                     </label>
                     <br />
@@ -136,6 +138,7 @@ class Form extends React.Component {
                     <br />
                     <input type="submit" value="Submit" />
                 </form>
+              </div>
             </div>
         )
     }
