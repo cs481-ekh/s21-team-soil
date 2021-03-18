@@ -17,7 +17,7 @@ class Home extends Component {
   render() {
     return (
       <div className="home-page">
-            <div className="center">
+         <div className="center">
               <div className="center">
                 <h2>Home/Login Page</h2>
               </div>

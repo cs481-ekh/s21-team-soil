@@ -7,3 +7,16 @@
 .margin {
   margin: 10px;
 }
+
+label {
+    display: inline-block;
+    width: 200px;
+}
+
+input {
+    display: inline-block;
+}
+
+.form-control {
+    margin-bottom: 5px;
+}
