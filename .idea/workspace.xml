@@ -35,7 +35,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Home.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Home.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/soil-website/src/Home.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="277">
@@ -50,6 +50,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="238">
               <caret line="14" column="35" lean-forward="false" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="package-lock.json" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/soil-website/package-lock.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="51">
+              <caret line="3" column="23" lean-forward="true" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
               <folding />
             </state>
           </provider>
@@ -103,6 +113,7 @@
         <option value="$PROJECT_DIR$/soil-website/src/Main.js" />
         <option value="$PROJECT_DIR$/soil-website/package.json" />
         <option value="$PROJECT_DIR$/soil-website/src/Home.js" />
+        <option value="$PROJECT_DIR$/soil-website/package-lock.json" />
       </list>
     </option>
   </component>
@@ -663,6 +674,14 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/soil-website/src/Home.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="25" column="12" lean-forward="false" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/soil-website/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
@@ -671,10 +690,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/soil-website/src/Home.js">
+    <entry file="file://$PROJECT_DIR$/soil-website/package-lock.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="25" column="12" lean-forward="false" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+        <state relative-caret-position="51">
+          <caret line="3" column="23" lean-forward="true" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
           <folding />
         </state>
       </provider>
