@@ -5,6 +5,15 @@ from rest_framework import status
 from .models import soil_sample
 from .serializers import *
 
+from io import BytesIO
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+from reportlab.platypus import BaseDocTemplate, SimpleDocTemplate
+from reportlab.platypus.tables import Table, TableStyle
+from reportlab.platypus import Paragraph
+from reportlab.lib.pagesizes import letter, landscape
+from reportlab.lib.styles import ParagraphStyle
+
 import json
 
 #import rpy2
@@ -38,6 +47,45 @@ def soil_sample(request):
             #return Response(request """status=status.HTTP_201_CREATED""")
             
         return Response(request.data, status=status.HTTP_201_CREATED)
+
+@api_view(['GET'])
+def report(request):
+    
+    buffer = BytesIO()
+
+    pdf_template = SimpleDocTemplate(buffer,
+                                     rightMargin=72,
+                                     leftMargin=72,
+                                     topMargin=72, 
+                                     bottomMargin=72,
+                                     # Uncomment the following line to show the page margins on the PDF.
+                                     #showBoundary=1,
+                                     pageSize=letter
+                                     )
+
+    # container for pdf elements
+    elements = []
+
+    headerStyle = ParagraphStyle('HEADER', alignment=1, fontSize=16, spaceAfter=16)
+
+    # Add the 
+    p1 = Paragraph("<b>Statistical Soil Stabilizer Report</b>", headerStyle)
+
+    # Uncomment the following lines to see some examples of default paragraph/tables
+    #p2 = Paragraph("Lorem ipsum")
+    #t1 = Table([(1,2),(3,4)])
+
+    elements.append(p1)
+    #elements.append(p2)
+    #elements.append(t1)
+
+    # build the pdf from the elements list
+    pdf_template.build(elements)
+
+    # ensure we start from the beginning of the buffer
+    buffer.seek(0)
+    # return the buffer as a file response
+    return FileResponse(buffer, as_attachment=True, filename="Geo_Report.pdf", content_type="application/pdf", status=status.HTTP_200_OK)
 
 """@api_view(['PUT', 'DELETE'])
 def soils_detail(request, pk):

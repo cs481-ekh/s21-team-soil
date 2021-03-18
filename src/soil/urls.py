@@ -20,5 +20,6 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('report/', views.report),
     re_path(r'^api/soil_sample/$', views.soil_sample),
 ]
