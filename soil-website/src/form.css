@@ -1,0 +1,22 @@
+.center-border {
+  margin: auto;
+  width: 40%;
+  border: 2px solid black;
+}
+
+.margin {
+  margin: 10px;
+}
+
+label {
+    display: inline-block;
+    width: 200px;
+}
+
+input {
+    display: inline-block;
+}
+
+.form-control {
+    margin-bottom: 5px;
+}
