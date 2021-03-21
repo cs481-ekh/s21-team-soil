@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path
-from soil_samples import views
+from soil.soil_samples import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('report/', views.report),
-    re_path(r'^api/insert_soil_sample/$', views.insert_soil_sample),
+    re_path(r'^api/soil/insert_soil_sample/$', views.insert_soil_sample),
 ]
