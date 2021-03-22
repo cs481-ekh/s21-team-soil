@@ -43,11 +43,11 @@ def insert_soil_sample(request):
             
             soil = soil_object(data['dataFile'], data['liquidLimit'], data['plasticIndex'], data['clayPercent'], data['siltPercent'], data['sandPercent'], data['organicContent'], data['limeCementStabilize'], data['limeCementDose'], data['quantResult'], data['qualResult'])
             
-            # create predictor object
-            predict = predictor()
+            # # create predictor object
+            # predict = predictor()
 
-            # Assume lime classificaton analysis for now.
-            result = predict.compute_lime_classification(soil)
+            # # Assume lime classificaton analysis for now.
+            # result = predict.compute_lime_classification(soil)
 
             #
             # This block is commented out for now as it is unknown what determines which
