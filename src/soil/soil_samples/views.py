@@ -40,8 +40,34 @@ def insert_soil_sample(request):
             serializer.save()
             # parse request.data
             data = json.load(request.data)
+            
             soil = soil_object(data['dataFile'], data['liquidLimit'], data['plasticIndex'], data['clayPercent'], data['siltPercent'], data['sandPercent'], data['organicContent'], data['limeCementStabilize'], data['limeCementDose'], data['quantResult'], data['qualResult'])
             
+            # create predictor object
+            predict = predictor()
+
+            # Assume lime classificaton analysis for now.
+            result = predict.compute_lime_classification(soil)
+
+            #
+            # This block is commented out for now as it is unknown what determines which
+            # of analysis the user is asking for
+            #
+            # # Choose an analysis to run based on json fields
+            # if("quantResult" == False):
+            #     if "limeCementDose" > 0:
+            #         predict.compute_lime_classification(soil)
+            #     else: 
+            #         predict.compute_cement_classification(soil)
+            # else:
+            #     if "limeCementDose" > 0:
+            #         predict.compute_lime_regression(soil)
+            #     else: 
+            #         predict.compute_cement_regression(soil)
+
+            # Return the results somehow
+            # print(result)
+
             #soil = Soil_Object(data.dataFile, data.liquidLimit, data.plasticIndex, data.clayPercent, data.siltPercent, data.sandPercent, data.organicContent, data.limeCementStabilize, data.limeCementDose, data.quantResult, data.qualResult)
 
             #soil = Soil_Object(dataFile, liquidLimit, plasticIndex, clayPercent, siltPercent, sandPercent, organicContent, limeCementStabilize, limeCementDose, quantResult, qualResult)
