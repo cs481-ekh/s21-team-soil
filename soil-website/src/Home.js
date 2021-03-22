@@ -8,6 +8,14 @@ class Home extends Component {
 
     loginSuccess = (response) => {
         console.log(response.getAuthResponse().id_token);
+        fetch('http://localhost:8000/authenticate/', {
+            method: 'POST',
+            headers: {
+                'accept': 'application/json',
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(response.getAuthResponse().id_token)
+        })
     }
 
     loginFailure = (response) => {

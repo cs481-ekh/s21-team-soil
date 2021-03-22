@@ -11,10 +11,12 @@ from reportlab.platypus import Paragraph
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib.styles import ParagraphStyle
 
+from google.oauth2 import id_token
+from google.auth.transport import requests
+
 
 from .models import soil_sample
 from .serializers import *
-
 
 import json
 
@@ -48,7 +50,18 @@ def insert_soil_sample(request):
             return Response(request.data, status=status.HTTP_201_CREATED)
             #return Response(request """status=status.HTTP_201_CREATED""")
             
-        return Response(request.data, status=status.HTTP_201_CREATED)
+        return Response(request, status=status.HTTP_201_CREATED)
+
+@api_view(['POST'])
+def authenticate_user(request):
+    token = request.data
+    try:
+        # idinfo contains all of the information from the user being authenticated
+        idinfo = id_token.verify_oauth2_token(token, requests.Request(), "91335092244-a8nui54bma999p0f0f61uklj8095v6cl.apps.googleusercontent.com")
+        return Response(idinfo,status=status.HTTP_200_OK)
+    except ValueError as e:
+        # Invalid token
+        return Response(data=str(e),status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['GET'])
 def report(request):

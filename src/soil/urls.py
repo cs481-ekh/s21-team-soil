@@ -20,5 +20,6 @@ from soil.soil_samples import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('report/', views.report),
+    path('authenticate/', views.authenticate_user),
     re_path(r'^api/soil/insert_soil_sample/$', views.insert_soil_sample),
 ]
