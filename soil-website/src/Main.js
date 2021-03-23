@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Home from "./Home";
 import Form from "./Form";
+import Admin from "./Admin";
 
 class Main extends Component {
     render() {
@@ -18,15 +19,19 @@ class Main extends Component {
                         <div className="title">
                             <h1>Soil Stabilizer Computation Tool</h1>
                         </div>
-                        <div class="textstyle">
+                        <div className="textstyle">
                             <NavLink to="/">Home</NavLink>
                         </div>
                         <div className="textstyle">
                             <NavLink to="/form">Form</NavLink>
                         </div>
+                        <div className="textstyle">
+                            <NavLink to="/admin">Admin</NavLink>
+                        </div>
                         <div className="content">
                             <Route exact path="/" component={Home} />
                             <Route path="/form" component={Form} />
+                            <Route path="/admin" component={Admin} />
                         </div>
                     </div>
                 </HashRouter>
