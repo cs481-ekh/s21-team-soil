@@ -23,12 +23,11 @@ class predictor():
         #
         # x_test will come from the input to the function
         #
-        # These will be used in the 3 lines below
+        # These will be used in the lines below
 
+        # Might need to create an array of values based around soil_sample fields for np.array.
 
         # If the data was loaded from file, then use the 'dataFile' field for analysis. If not, use individually input values
-
-
         if soil_sample.data_file is not None:
             # What would 'x_test' be in this case? liquitLimit? plasticIndex? clayPercent? sandPercent? organicContent?
             # How would you get this field from the object loaded from file? Can we expect it to have the same fields as the json object?
