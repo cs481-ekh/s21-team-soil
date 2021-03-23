@@ -37,9 +37,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'user_tracking.apps.UserTrackingConfig',
+
+    # REST framework dependencies
+    'rest_framework',
+    'corsheaders',
+
+    # Test app
+    'soil.soil_samples',
 ]
 
 MIDDLEWARE = [
+    # REST middleware
+    'corsheaders.middleware.CorsMiddleware',
+
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -47,6 +59,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000"
 ]
 
 ROOT_URLCONF = 'soil.urls'
@@ -74,23 +90,6 @@ WSGI_APPLICATION = 'soil.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-  #  'default': {
-   #     'ENGINE': 'django.db.backends.sqlite3',
-    #    'NAME': BASE_DIR / 'db.sqlite3',
-    #}
-    # Use this connection if you wish to only use/test on your local MySQL server instance.
-    #'default': {
-    #    'ENGINE': 'django.db.backends.mysql',
-     #   'NAME': 'soil_dev',
-      #  'USER': 'django_priv',
-       # 'PASSWORD': '2468',
-        #'HOST': 'localhost',
-        #'PORT': '3306',
-        #'OPTIONS' : {
-         #   'charset': 'utf8mb4'
-        #}
-   # }
-
     # AWS hosted MySQL server
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -100,7 +99,8 @@ DATABASES = {
         'HOST': 'soil-dev-aws.cm1fekzgqprt.us-east-2.rds.amazonaws.com',
         'PORT': '3306',
         'OPTIONS' : {
-            'charset': 'utf8mb4'
+            'charset': 'utf8mb4',
+            'init_command' : "SET sql_mode='STRICT_TRANS_TABLES'"
         }
     }
 }

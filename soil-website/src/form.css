@@ -8,7 +8,6 @@
   margin: 10px;
 }
 
-
 .column {
   float: left;
   width: 50%;
@@ -39,4 +38,16 @@ span {
     display: block;
     overflow: hidden;
     text-align: center;
+}
+label {
+    display: inline-block;
+    width: 200px;
+}
+
+input {
+    display: inline-block;
+}
+
+.form-control {
+    margin-bottom: 5px;
 }

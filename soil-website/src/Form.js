@@ -35,6 +35,26 @@ class Form extends React.Component {
 
     handleSubmit(event) {
         console.log(JSON.stringify(this.state, null, 2));
+        // TODO: Get correct path for dev/prod on fetch requests.
+        fetch('http://localhost:8000/report/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/pdf'
+            }
+        })
+            .then(res => res.blob())
+            .then(blob => {
+                var file = window.URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = file;
+                a.download = 'Soil_Stabilizer_Report.pdf';
+                document.body.appendChild(a);
+                a.click();
+                setTimeout(() => {
+                    a.remove();
+                    window.URL.revokeObjectURL(file);
+                }, 1000)
+            });
     }
 
     render() {
@@ -145,21 +165,27 @@ class Form extends React.Component {
                             checked={this.state.limeDose}
                             onChange={this.handleInputChange} />
                     </label>
-                    <br />
-                    <label> Quantitative Result
+                        <br />
+                        <label>
+                            Sand Percentage:&nbsp;
                         <input
-                            name="quantResult"
-                            type="checkbox"
-                            checked={this.state.quantResult}
-                            onChange={this.handleInputChange} />
+                                name="sandPercent"
+                                type="number"
+                                value={this.state.sandPercent}
+                                max="100"
+                                onChange={this.handleInputChange} />
+                            &nbsp;%
                     </label>
-                    <br />
-                    <label> Qualitative Result
+                        <br />
+                        <label>
+                            Organic Content:&nbsp;
                         <input
-                            name="qualResult"
-                            type="checkbox"
-                            checked={this.state.qualResult}
-                            onChange={this.handleInputChange} />
+                                name="organicContent"
+                                type="number"
+                                value={this.state.organicContent}
+                                max="100"
+                                onChange={this.handleInputChange} />
+                            &nbsp;%
                     </label>
                     <br />
                     <br />
