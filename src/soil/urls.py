@@ -14,11 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from soil.soil_samples import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('report/', views.report),
+    path('authenticate/', views.authenticate_user),
     re_path(r'^api/soil/insert_soil_sample/$', views.insert_soil_sample),
+    path('user_tracking/', include('user_tracking.urls')),
 ]

@@ -13,9 +13,11 @@ python -m pip install --upgrade djangorestframework || { echo "REST framework in
 python -m pip install --upgrade django-cors-headers || { echo "CORS app install failed"; exit 1; }
 python -m pip install --upgrade rpy2 || { echo "RPY2 framework imstall failed"; exit 1; }
 python -m pip install --upgrade reportlab || { echo "ReportLab install failed"; exit 1; }
+python -m pip install --upgrade google-auth || { echo "Google Authentication install failed"; exit 1; }
+python -m pip install --upgrade google-auth-oauthlib || { echo "Google Authentication OAuth Library install failed"; exit 1; }
 
 echo "Running PyLint"
-pylint -d R,C,wildcard-import,undefined-variable,unused-variable,unused-import,unused-import,unused-wildcard-import,unused-argument src || { echo "pylint failed"; exit 1; }
+pylint -d R,C,wildcard-import,undefined-variable,W0105,E1101,E0401,unused-variable,unused-import,unused-import,unused-wildcard-import,unused-argument src || { echo "pylint failed"; exit 1; }
 
 echo "Running Django Migrations"
 python src/manage.py migrate || { echo "migrate failed"; exit 1; }
