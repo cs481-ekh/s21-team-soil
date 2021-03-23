@@ -18,7 +18,7 @@ class Main extends Component {
                   <div className="title">
                     <h1>Soil Stabilizer Computation Tool</h1>
                   </div>
-                    <div class="textstyle">
+                    <div className="textstyle">
                      <NavLink to="/">Home</NavLink>
                      </div>
                      <div className="textstyle">
