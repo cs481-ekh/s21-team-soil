@@ -46,33 +46,27 @@ def insert_soil_sample(request):
             soil = soil_object(data['dataFile'], data['liquidLimit'], data['plasticIndex'], data['clayPercent'], data['siltPercent'], data['sandPercent'], data['organicContent'], data['limeCementStabilize'], data['limeCementDose'], data['quantResult'], data['qualResult'])
             
             # # create predictor object
-            # predict = predictor()
+            analyzer = soil_analyzer()
 
             # # Assume lime classificaton analysis for now.
             # result = predict.compute_lime_classification(soil)
 
-            #
-            # This block is commented out for now as it is unknown what determines which
-            # of analysis the user is asking for
-            #
-            # # Choose an analysis to run based on json fields
-            # if("quantResult" == False):
-            #     if "limeCementDose" > 0:
-            #         predict.compute_lime_classification(soil)
-            #     else: 
-            #         predict.compute_cement_classification(soil)
-            # else:
-            #     if "limeCementDose" > 0:
-            #         predict.compute_lime_regression(soil)
-            #     else: 
-            #         predict.compute_cement_regression(soil)
+
+            # Choose an analysis to run based on json fields
+            if("quantResult" == False):
+                if "limeDose" == True:
+                    result = analyzer.lime_classification(soil)
+                else: 
+                    result = analyzer.cement_classification(soil)
+            else:
+                if "limeDose" == True:
+                    result = analyzer.lime_regression(soil)
+                else: 
+                    result = analyzer.cement_regression(soil)
 
             # Return the results somehow
             # print(result)
 
-            #soil = Soil_Object(data.dataFile, data.liquidLimit, data.plasticIndex, data.clayPercent, data.siltPercent, data.sandPercent, data.organicContent, data.limeCementStabilize, data.limeCementDose, data.quantResult, data.qualResult)
-
-            #soil = Soil_Object(dataFile, liquidLimit, plasticIndex, clayPercent, siltPercent, sandPercent, organicContent, limeCementStabilize, limeCementDose, quantResult, qualResult)
             return Response(request.data, status=status.HTTP_201_CREATED)
             #return Response(request """status=status.HTTP_201_CREATED""")
             
