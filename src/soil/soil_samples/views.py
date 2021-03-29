@@ -67,7 +67,7 @@ def insert_soil_sample(request):
             # Return the results somehow
             # print(result)
 
-            return Response(request.data, status=status.HTTP_201_CREATED)
+            return Response(result, status=status.HTTP_200_OK)
             #return Response(request """status=status.HTTP_201_CREATED""")
             
         return Response(request, status=status.HTTP_201_CREATED)
