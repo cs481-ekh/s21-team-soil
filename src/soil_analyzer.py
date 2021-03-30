@@ -38,7 +38,6 @@ class soil_analyzer():
         Returns:
             rpy2.robjects: R matrix object for use with rpy2 library
         """
-        # TODO: Ask Amit for proper raster data to get std and mean for preprocessing of data
         
         # Pull values from soil_sample into one array
         soil_values = np.array([soil_sample.liquidLimit, soil_sample.plasticIndex, soil_sample.clayPercent, soil_sample.siltPercent, soil_sample.sandPercent, soil_sample.organicContent, soil_sample.limeCementStabilize])
@@ -88,7 +87,7 @@ class soil_analyzer():
         predict = rpy2.robjects.r['predict']
         r_pred = np.array(predict(self.lime_classification_model, sample_values))
 
-        # TODO: Ask Amit what classes correspond to what output values from SVM classifier.
+        
         if r_pred[0] < 0: return 0
 
         return r_pred[0]
