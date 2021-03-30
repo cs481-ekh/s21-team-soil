@@ -11,17 +11,18 @@ class soil_analyzer():
         # Instantiating SVM Radial Kernel Regression model for Lime Regression
         self.utils_lr = rpy2.robjects.packages.importr('e1071')
         svm_rad_regression = "svm_lime_regression.rds"
-        rpy2.robjects.r(f"model_load <- readRDS('{svm_rad_regression}')")
-        self.lime_regression_model = rpy2.robjects.r["model_load"]
+        rpy2.robjects.r(f"lime_reg <- readRDS('{svm_rad_regression}')")
+        self.lime_regression_model = rpy2.robjects.r["lime_reg"]
         # =============================================================
 
-
         # Instantiating _ model for Lime Classification
-
+        svm_rad_class = "svm_lime_classification.rds"
+        rpy2.robjects.r(f"lime_class <- readRDS('{svm_rad_class}')")
+        self.lime_classification_model = rpy2.robjects.r["lime_class"]
         # =============================================================
 
         # Instantiating _ model for Cement Regression
-
+        
         # =============================================================
 
         # Instantiating _ model for Cement Classification
@@ -37,6 +38,8 @@ class soil_analyzer():
         Returns:
             rpy2.robjects: R matrix object for use with rpy2 library
         """
+        # TODO: Ask Amit for proper raster data to get std and mean for preprocessing of data
+        
         # Pull values from soil_sample into one array
         soil_values = np.array([soil_sample.liquidLimit, soil_sample.plasticIndex, soil_sample.clayPercent, soil_sample.siltPercent, soil_sample.sandPercent, soil_sample.organicContent, soil_sample.limeCementStabilize])
 
@@ -51,7 +54,7 @@ class soil_analyzer():
 
     def lime_regression(self, soil_sample):
         """Computes lime regression analysis for given soil sample.
-        Utilizes SVM Radial Kernel Regression model for prediction.
+        Utilizes a pretrained SVM Radial Kernel Regression model for prediction.
 
         Args:
             soil_sample (soil_object): A soil_object with values for exactly one soil sample
@@ -65,10 +68,30 @@ class soil_analyzer():
         predict = rpy2.robjects.r['predict']
         r_pred = np.array(predict(self.lime_regression_model, sample_values))
 
+        if r_pred[0] < 0: return 0
+
         return r_pred[0]
     
-    def lime_classification(self, soil_sample):        
-        return None
+    def lime_classification(self, soil_sample): 
+        """Computes lime classification analysis for given soil sample.
+        Utilizes a pretrained SVM Radial Kernel Classifier model for prediction.
+
+        Args:
+            soil_sample (soil_object): A soil_object with values for exactly one soil sample
+
+        Returns:
+            float: Returns lime_classification class
+        """
+        # Convert soil_sample to R-matrix object
+        sample_values = self.get_rmatrix(soil_sample)
+
+        predict = rpy2.robjects.r['predict']
+        r_pred = np.array(predict(self.lime_classification_model, sample_values))
+
+        # TODO: Ask Amit what classes correspond to what output values from SVM classifier.
+        if r_pred[0] < 0: return 0
+
+        return r_pred[0]
 
     def cement_regression(self, soil_sample):
         return None

@@ -1,4 +1,3 @@
-
 class soil_object:
     """dataFile
     liquidLimit
