@@ -11,7 +11,8 @@ python -m pip install --upgrade Django || { echo "Django install failed"; exit 1
 python -m pip install --upgrade mysqlclient || { echo "Mysql client install failed"; exit 1; }
 python -m pip install --upgrade djangorestframework || { echo "REST framework install failed"; exit 1; }
 python -m pip install --upgrade django-cors-headers || { echo "CORS app install failed"; exit 1; }
-python -m pip install --upgrade rpy2 || { echo "RPY2 framework imstall failed"; exit 1; }
+python -m pip install --upgrade rpy2 || { echo "RPY2 framework install failed"; exit 1; }
+python -m pip install --upgrade numpy || { echo "numpy framework install failed"; exit 1; }
 python -m pip install --upgrade reportlab || { echo "ReportLab install failed"; exit 1; }
 python -m pip install --upgrade google-auth || { echo "Google Authentication install failed"; exit 1; }
 python -m pip install --upgrade google-auth-oauthlib || { echo "Google Authentication OAuth Library install failed"; exit 1; }
