@@ -7,15 +7,14 @@ class soil_object:
     "siltPercent"
     "sandPercent"
     "organicContent"
-    "limeStabilize"
-    "cementStabilize"
+    "stabilizer"
     "limeDose"
     "cementDose"
     "quantResult"
     "qualResult"
     """
 
-    def __init__(self, dataFile, liquidLimit, plasticIndex, clayPercent, siltPercent, sandPercent, organicContent, limeStabilize, cementStabilize, limeDose, cementDose, quantResult, qualResult):
+    def __init__(self, dataFile, liquidLimit, plasticIndex, clayPercent, siltPercent, sandPercent, organicContent, stabilizer, limeDose, cementDose, quantResult, qualResult):
         self.dataFile = dataFile
 
         # Values needed for soil analysis
@@ -25,8 +24,7 @@ class soil_object:
         self.siltPercent = siltPercent
         self.sandPercent = sandPercent
         self.organicContent = organicContent
-        self.limeStabilize = limeStabilize
-        self.cementStabilize = cementStabilize
+        self.stabilizer = stabilizer
 
         self.limeDose = limeDose
         self.cementDose = cementDose
