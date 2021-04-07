@@ -40,7 +40,7 @@ class soil_analyzer():
         """
         
         # Pull values from soil_sample into one array
-        soil_values = np.array([soil_sample.liquidLimit, soil_sample.plasticIndex, soil_sample.clayPercent, soil_sample.siltPercent, soil_sample.sandPercent, soil_sample.organicContent, soil_sample.limeCementStabilize])
+        soil_values = np.array([soil_sample.liquidLimit, soil_sample.plasticIndex, soil_sample.clayPercent, soil_sample.siltPercent, soil_sample.sandPercent, soil_sample.organicContent, soil_sample.stabilizer])
 
         # Turn numpy array into R-matrix
         r_matrix = rpy2.robjects.r['matrix'](rpy2.robjects.FloatVector(soil_values), nrow=1)
