@@ -17,6 +17,8 @@ from google.auth.transport import requests
 
 from .models import soil_sample
 from .serializers import *
+from data_object import soil_object
+from soil_analyzer import soil_analyzer
 
 import json
 
@@ -37,40 +39,48 @@ def insert_soil_sample(request):
      #   return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'POST':
-        serializer = soilserializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
+        #serializer = soilserializer(data=request.data)
+        #if serializer.is_valid():
+            #serializer.save()
             # parse request.data
-            data = json.load(request.data)
             
-            soil = soil_object(data['dataFile'], data['liquidLimit'], data['plasticIndex'], data['clayPercent'], data['siltPercent'], data['sandPercent'], data['organicContent'], data['limeCementStabilize'], data['limeCementDose'], data['quantResult'], data['qualResult'])
+            #data = json.load(request.data)
+            
+            soil = soil_object(request.data['dataFile'], request.data['liquidLimit'], request.data['plasticIndex'], request.data['clayPercent'], request.data['siltPercent'], request.data['sandPercent'], request.data['organicContent'], request.data['stabilize'], request.data['limeDose'], request.data['cementDose'], request.data['quantResult'], request.data['qualResult'])
             
             # # create predictor object
             analyzer = soil_analyzer()
 
-            # # Assume lime classificaton analysis for now.
-            # result = predict.compute_lime_classification(soil)
+            # # # Assume lime classificaton analysis for now.
+            # result = analyzer.lime_classification(soil)   
 
-
+            #results = np.array([])
+            
             # Choose an analysis to run based on json fields
-            if("quantResult" == False):
-                if "limeDose" == True:
-                    result = analyzer.lime_classification(soil)
-                else: 
-                    result = analyzer.cement_classification(soil)
-            else:
-                if "limeDose" == True:
+            
+            if (request.data['qualResult'] == True):
+                if request.data['limeDose'] == True:
                     result = analyzer.lime_regression(soil)
-                else: 
+                    return Response(result, status=status.HTTP_200_OK)
+                if request.data['cementDose'] == True:
                     result = analyzer.cement_regression(soil)
+                    return Response(result, status=status.HTTP_200_OK)
+            if(request.data['quantResult'] == True):
+                if request.data['limeDose'] == True:
+                    result = analyzer.lime_classification(soil)
+                    return Response(result, status=status.HTTP_200_OK)
+            if request.data['cementDose'] == True:
+                    result = analyzer.cement_classification(soil)
+                    return Response(result, status=status.HTTP_200_OK)
 
             # Return the results somehow
             # print(result)
 
-            return Response(result, status=status.HTTP_200_OK)
+            #return Response(0, status=status.HTTP_200_OK)
+            # return Response(result, status=status.HTTP_200_OK)
             #return Response(request """status=status.HTTP_201_CREATED""")
             
-        return Response(request, status=status.HTTP_201_CREATED)
+        #return Response(request, status=status.HTTP_201_CREATED)
 
 @api_view(['POST'])
 def authenticate_user(request):
