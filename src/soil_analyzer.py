@@ -93,7 +93,8 @@ class soil_analyzer():
         return r_pred[0]
 
     def cement_regression(self, soil_sample):
-        return None
+        return 999
 
     def cement_classification(self, soil_sample):
-        return None
+        # Returning dummy value to get pylint working.
+        return 999

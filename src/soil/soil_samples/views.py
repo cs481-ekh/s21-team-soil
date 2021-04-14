@@ -39,6 +39,8 @@ def insert_soil_sample(request):
      #   return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     if request.method == 'POST':
+
+
         #serializer = soilserializer(data=request.data)
         #if serializer.is_valid():
             #serializer.save()
@@ -46,10 +48,10 @@ def insert_soil_sample(request):
             
             #data = json.load(request.data)
             
-            soil = soil_object(request.data['dataFile'], request.data['liquidLimit'], request.data['plasticIndex'], request.data['clayPercent'], request.data['siltPercent'], request.data['sandPercent'], request.data['organicContent'], request.data['stabilize'], request.data['limeDose'], request.data['cementDose'], request.data['quantResult'], request.data['qualResult'])
+        soil = soil_object(request.data['dataFile'], request.data['liquidLimit'], request.data['plasticIndex'], request.data['clayPercent'], request.data['siltPercent'], request.data['sandPercent'], request.data['organicContent'], request.data['stabilize'], request.data['limeDose'], request.data['cementDose'], request.data['quantResult'], request.data['qualResult'])
             
             # # create predictor object
-            analyzer = soil_analyzer()
+        analyzer = soil_analyzer()
 
             # # # Assume lime classificaton analysis for now.
             # result = analyzer.lime_classification(soil)   
@@ -58,20 +60,26 @@ def insert_soil_sample(request):
             
             # Choose an analysis to run based on json fields
             
-            if (request.data['qualResult'] == True):
-                if request.data['limeDose'] == True:
-                    result = analyzer.lime_regression(soil)
-                    return Response(result, status=status.HTTP_200_OK)
-                if request.data['cementDose'] == True:
-                    result = analyzer.cement_regression(soil)
-                    return Response(result, status=status.HTTP_200_OK)
-            if(request.data['quantResult'] == True):
-                if request.data['limeDose'] == True:
-                    result = analyzer.lime_classification(soil)
-                    return Response(result, status=status.HTTP_200_OK)
+        if (request.data['qualResult'] == True):
+
+            if request.data['limeDose'] == True:
+
+                result = analyzer.lime_regression(soil)
+                return Response(result, status=status.HTTP_200_OK)
+
             if request.data['cementDose'] == True:
-                    result = analyzer.cement_classification(soil)
-                    return Response(result, status=status.HTTP_200_OK)
+                result = analyzer.cement_regression(soil)
+                return Response(result, status=status.HTTP_200_OK)
+
+        if(request.data['quantResult'] == True):
+
+            if request.data['limeDose'] == True:
+                result = analyzer.lime_classification(soil)
+                return Response(result, status=status.HTTP_200_OK)
+
+            if request.data['cementDose'] == True:
+                result = analyzer.cement_classification(soil)
+                return Response(result, status=status.HTTP_200_OK)
 
             # Return the results somehow
             # print(result)
