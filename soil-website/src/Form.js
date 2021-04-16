@@ -34,27 +34,30 @@ class Form extends React.Component {
 
 
     handleSubmit(event) {
+        event.preventDefault();
         console.log(JSON.stringify(this.state, null, 2));
         // TODO: Get correct path for dev/prod on fetch requests.
         fetch('http://localhost:8000/report/', {
-            method: 'GET',
+            method: 'POST',
             headers: {
-                'Content-Type': 'application/pdf'
-            }
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(this.state)
         })
-            .then(res => res.blob())
-            .then(blob => {
-                var file = window.URL.createObjectURL(blob);
-                var a = document.createElement('a');
-                a.href = file;
-                a.download = 'Soil_Stabilizer_Report.pdf';
-                document.body.appendChild(a);
-                a.click();
-                setTimeout(() => {
-                    a.remove();
-                    window.URL.revokeObjectURL(file);
-                }, 1000)
-            });
+        //.then(res => res.blob())
+        //.then(blob => {
+        //    var file = window.URL.createObjectURL(blob);
+        //    var a = document.createElement('a');
+        //    a.href = file;
+        //    a.download = 'Soil_Stabilizer_Report.pdf';
+        //    document.body.appendChild(a);
+        //    a.click();
+        //    setTimeout(() => {
+        //        a.remove();
+        //        window.URL.revokeObjectURL(file);
+        //    }, 1000)
+        //});
     }
 
     render() {

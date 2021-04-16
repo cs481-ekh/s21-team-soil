@@ -14,7 +14,6 @@ from reportlab.lib.styles import ParagraphStyle
 from google.oauth2 import id_token
 from google.auth.transport import requests
 
-
 from .models import soil_sample
 from .serializers import *
 from data_object import soil_object
@@ -25,70 +24,34 @@ import json
 #import rpy2
 #from rpy2.rinterface import R_VERSION_BUILD
 
-@api_view(['GET', 'POST'])
-def insert_soil_sample(request):
+@api_view(['POST'])
+def get_report(request):
 
-    #if request.method == 'GET':
-        # data = Soil.objects.all()
-
-        # serializer = SoilSerializer(data, context={'request': request}, many=True)
-
-        # return Response(serializer.data)
-
-        # To be implemented later
-     #   return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    if request.method == 'POST':
-
-
-        #serializer = soilserializer(data=request.data)
-        #if serializer.is_valid():
-            #serializer.save()
-            # parse request.data
+    soil = soil_object(request.data['dataFile'], request.data['liquidLimit'], request.data['plasticIndex'], request.data['clayPercent'], request.data['siltPercent'], request.data['sandPercent'], request.data['organicContent'], request.data['stabilize'], request.data['limeDose'], request.data['cementDose'], request.data['quantResult'], request.data['qualResult'])
             
-            #data = json.load(request.data)
+    # create predictor object
+    analyzer = soil_analyzer()
+
+    results = {}
             
-        soil = soil_object(request.data['dataFile'], request.data['liquidLimit'], request.data['plasticIndex'], request.data['clayPercent'], request.data['siltPercent'], request.data['sandPercent'], request.data['organicContent'], request.data['stabilize'], request.data['limeDose'], request.data['cementDose'], request.data['quantResult'], request.data['qualResult'])
-            
-            # # create predictor object
-        analyzer = soil_analyzer()
+    if (request.data['qualResult'] == True):
+        if request.data['limeDose'] == True:
+            result = analyzer.lime_regression(soil)
+            results["limeRegression"] = result
+        if request.data['cementDose'] == True:
+            result = analyzer.cement_regression(soil)
+            results["cementRegression"] = result
+    if(request.data['quantResult'] == True):
+        if request.data['limeDose'] == True:
+            result = analyzer.lime_classification(soil)
+            results["limeClassification"] = result
+        if request.data['cementDose'] == True:
+            result = analyzer.cement_classification(soil)
+            results["cementClassification"] = result
 
-            # # # Assume lime classificaton analysis for now.
-            # result = analyzer.lime_classification(soil)   
+    # TODO: Generate the report
 
-            #results = np.array([])
-            
-            # Choose an analysis to run based on json fields
-            
-        if (request.data['qualResult'] == True):
-
-            if request.data['limeDose'] == True:
-
-                result = analyzer.lime_regression(soil)
-                return Response(result, status=status.HTTP_200_OK)
-
-            if request.data['cementDose'] == True:
-                result = analyzer.cement_regression(soil)
-                return Response(result, status=status.HTTP_200_OK)
-
-        if(request.data['quantResult'] == True):
-
-            if request.data['limeDose'] == True:
-                result = analyzer.lime_classification(soil)
-                return Response(result, status=status.HTTP_200_OK)
-
-            if request.data['cementDose'] == True:
-                result = analyzer.cement_classification(soil)
-                return Response(result, status=status.HTTP_200_OK)
-
-            # Return the results somehow
-            # print(result)
-
-            #return Response(0, status=status.HTTP_200_OK)
-            # return Response(result, status=status.HTTP_200_OK)
-            #return Response(request """status=status.HTTP_201_CREATED""")
-            
-        #return Response(request, status=status.HTTP_201_CREATED)
+    return Response(results, status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 def authenticate_user(request):
