@@ -13,8 +13,9 @@ class Form extends React.Component {
             siltPercent: 0,
             sandPercent: 0,
             organicContent: 0,
-            limeCementStabilize: false,
-            limeCementDose: false,
+            stabilize: 0,
+            limeDose: false,
+            cementDose: false,
             quantResult: false,
             qualResult: false
         }
@@ -60,139 +61,126 @@ class Form extends React.Component {
     render() {
         return (
             <div className="center-border">
-              <div className="margin">
-                <div className="centered">
-                    <p> Choose to either upload a file <strong>OR</strong> manually enter inputs.</p>
-                </div>
-                <form onSubmit={this.handleSubmit}>
-                    <div className="row">
-
-                        <div className="column">
-                            <ExcelReader/>
-                        </div>
-                        <div className="column">
-                            <label>
-                            Liquid Limit:&nbsp;
-                            <input
-                                name="liquidLimit"
-                                type="number"
-                                value={this.state.liquidLimit}
-                                max="3"
-                                onChange={this.handleInputChange} />
-                        </label>
-                        <br />
-                        <label>
-                            Plasticity Index:&nbsp;
-                            <input
-                                name="plasticIndex"
-                                type="number"
-                                value={this.state.plasticIndex}
-                                onChange={this.handleInputChange} />
-                        </label>
-                        <br />
-                        <label>
-                            Clay Percentage:&nbsp;
-                            <input
-                                name="clayPercent"
-                                type="number"
-                                value={this.state.clayPercent}
-                                max="100"
-                                onChange={this.handleInputChange} />
-                        </label>&nbsp;%
-                        <br />
-                        <label>
-                            Silt Percentage:&nbsp;
-                            <input
-                                name="siltPercent"
-                                type="number"
-                                value={this.state.siltPercent}
-                                max="100"
-                                onChange={this.handleInputChange} />
-                        </label>&nbsp;%
-                        <br />
-                        <label>
-                            Sand Percentage:&nbsp;
-                            <input
-                                name="sandPercent"
-                                type="number"
-                                value={this.state.sandPercent}
-                                max="100"
-                                onChange={this.handleInputChange} />
-                        </label>&nbsp;%
-                        <br />
-                        <label>
-                            Organic Content:&nbsp;
-                            <input
-                                name="organicContent"
-                                type="number"
-                                value={this.state.organicContent}
-                                max="100"
-                                onChange={this.handleInputChange} />
-                        </label>&nbsp;%
-                        <br />
+                <div className="margin">
+                    <div className="centered">
+                        <p> Choose to either upload a file <strong>OR</strong> manually enter inputs.</p>
                     </div>
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="row">
+
+                            <div className="column">
+                                <ExcelReader />
+                            </div>
+                            <div className="column">
+                                <label>
+                                    Liquid Limit:&nbsp;
+                            <input
+                                        name="liquidLimit"
+                                        type="number"
+                                        value={this.state.liquidLimit}
+                                        max="3"
+                                        onChange={this.handleInputChange} />
+                                </label>
+                                <br />
+                                <label>
+                                    Plasticity Index:&nbsp;
+                            <input
+                                        name="plasticIndex"
+                                        type="number"
+                                        value={this.state.plasticIndex}
+                                        onChange={this.handleInputChange} />
+                                </label>
+                                <br />
+                                <label>
+                                    Clay Percentage:&nbsp;
+                            <input
+                                        name="clayPercent"
+                                        type="number"
+                                        value={this.state.clayPercent}
+                                        max="100"
+                                        onChange={this.handleInputChange} />
+                                </label>&nbsp;%
+                        <br />
+                                <label>
+                                    Silt Percentage:&nbsp;
+                            <input
+                                        name="siltPercent"
+                                        type="number"
+                                        value={this.state.siltPercent}
+                                        max="100"
+                                        onChange={this.handleInputChange} />
+                                </label>&nbsp;%
+                        <br />
+                                <label>
+                                    Sand Percentage:&nbsp;
+                            <input
+                                        name="sandPercent"
+                                        type="number"
+                                        value={this.state.sandPercent}
+                                        max="100"
+                                        onChange={this.handleInputChange} />
+                                </label>&nbsp;%
+                        <br />
+                                <label>
+                                    Organic Content:&nbsp;
+                                <input
+                                        name="organicContent"
+                                        type="number"
+                                        value={this.state.organicContent}
+                                        max="100"
+                                        onChange={this.handleInputChange} />
+                                </label>&nbsp;%
+                        <br />
+                                <label>
+                                    Stabilizer:&nbsp;
+                                <input
+                                        name="stabilize"
+                                        type="number"
+                                        value={this.state.stabilize}
+                                        onChange={this.handleInputChange} />
+                                </label>
+                            </div>
+                        </div>
+                        <span>
+                            <h2>Result Types</h2>
+                            <label> Cement Stabilization
+                        <input
+                                    name="cementStabilize"
+                                    type="checkbox"
+                                    checked={this.state.limeCementStabilize}
+                                    onChange={this.handleInputChange} />
+                            </label>
+                            <br />
+                            <label> Dose of Cement
+                        <input
+                                    name="cementDose"
+                                    type="checkbox"
+                                    checked={this.state.limeCementDose}
+                                    onChange={this.handleInputChange} />
+                            </label>
+                            <br />
+                            <label> Lime Stabilization
+                        <input
+                                    name="limeCementStabilize"
+                                    type="checkbox"
+                                    checked={this.state.limeStabilize}
+                                    onChange={this.handleInputChange} />
+                            </label>
+                            <br />
+                            <label> Dose of Lime
+                        <input
+                                    name="limeCementDose"
+                                    type="checkbox"
+                                    checked={this.state.limeDose}
+                                    onChange={this.handleInputChange} />
+                            </label>
+                            <br />
+                            <br />
+                            <br />
+                            <input type="submit" value="Submit" />
+                        </span>
+                    </form>
                 </div>
-                <span>
-                    <h2>Result Types</h2>
-                    <label> Cement Stabilization
-                        <input
-                            name="cementStabilize"
-                            type="checkbox"
-                            checked={this.state.limeCementStabilize}
-                            onChange={this.handleInputChange} />
-                    </label>
-                    <br />
-                    <label> Dose of Cement
-                        <input
-                            name="cementDose"
-                            type="checkbox"
-                            checked={this.state.limeCementDose}
-                            onChange={this.handleInputChange} />
-                    </label>
-                    <br />
-                    <label> Lime Stabilization
-                        <input
-                            name="limeCementStabilize"
-                            type="checkbox"
-                            checked={this.state.limeStabilize}
-                            onChange={this.handleInputChange} />
-                    </label>
-                    <br />
-                    <label> Dose of Lime
-                        <input
-                            name="limeCementDose"
-                            type="checkbox"
-                            checked={this.state.limeDose}
-                            onChange={this.handleInputChange} />
-                    </label>
-                        <br />
-                        <label>
-                            Sand Percentage:&nbsp;
-                        <input
-                                name="sandPercent"
-                                type="number"
-                                value={this.state.sandPercent}
-                                max="100"
-                                onChange={this.handleInputChange} />
-                            &nbsp;%
-                    </label>
-                        <br />
-                        <label>
-                            Organic Content:&nbsp;
-                        <input
-                                name="organicContent"
-                                type="number"
-                                value={this.state.organicContent}
-                                max="100"
-                                onChange={this.handleInputChange} />
-                            &nbsp;%
-                    </label>
-                    <br />
-                    <br />
-                <input type="submit" value="Submit" />
-              </span>
-            </form>
-            </div>
 
             </div>
         )
