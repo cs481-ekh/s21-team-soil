@@ -10,6 +10,7 @@ from reportlab.platypus.tables import Table, TableStyle
 from reportlab.platypus import Paragraph
 from reportlab.lib.pagesizes import letter, landscape
 from reportlab.lib.styles import ParagraphStyle
+from reportlab.lib import colors
 
 from google.oauth2 import id_token
 from google.auth.transport import requests
@@ -48,27 +49,10 @@ def get_report(request):
         if request.data['cementDose'] == True:
             result = analyzer.cement_classification(soil)
             results["cementClassification"] = result
-
-    # TODO: Generate the report
-
-    return Response(results, status=status.HTTP_200_OK)
-
-@api_view(['POST'])
-def authenticate_user(request):
-    token = request.data
-    try:
-        # idinfo contains all of the information from the user being authenticated
-        idinfo = id_token.verify_oauth2_token(token, requests.Request(), "91335092244-a8nui54bma999p0f0f61uklj8095v6cl.apps.googleusercontent.com")
-        return Response(idinfo,status=status.HTTP_200_OK)
-    except ValueError as e:
-        # Invalid token
-        return Response(data=str(e),status=status.HTTP_401_UNAUTHORIZED)
-
-@api_view(['GET'])
-def report(request):
-    
+        
     buffer = BytesIO()
 
+    # Reference: https://www.reportlab.com/docs/reportlab-userguide.pdf
     pdf_template = SimpleDocTemplate(buffer,
                                      rightMargin=72,
                                      leftMargin=72,
@@ -83,17 +67,24 @@ def report(request):
     elements = []
 
     headerStyle = ParagraphStyle('HEADER', alignment=1, fontSize=16, spaceAfter=16)
+    ts = TableStyle([
+        ('FONTSIZE', (0,0), (10,1), 8),
+        ('BACKGROUND', (0,0), (10,0), colors.HexColor("#cccccc"))
+    ])
 
-    # Add the 
+    # Add the report title
     p1 = Paragraph("<b>Statistical Soil Stabilizer Report</b>", headerStyle)
 
-    # Uncomment the following lines to see some examples of default paragraph/tables
-    #p2 = Paragraph("Lorem ipsum")
-    #t1 = Table([(1,2),(3,4)])
+    headers = ["LL", "PL", "Clay %", "Silt %", "Sand %", "O.C. %", "Stabilizer", "Lime Reg.", "Cement Reg.", "Lime Cl.", "Cement Cl."]
+    data = [request.data['liquidLimit'], request.data['plasticIndex'], request.data['clayPercent'], request.data['siltPercent'], request.data['sandPercent'], request.data['organicContent'], request.data['stabilize'], round(results['limeRegression'],4), round(results['cementRegression'],4), round(results['limeClassification'],4), round(results['cementClassification'],4)]
+    tableData = [headers,data]
+
+    t1 = Table(tableData)
+
+    t1.setStyle(ts)
 
     elements.append(p1)
-    #elements.append(p2)
-    #elements.append(t1)
+    elements.append(t1)
 
     # build the pdf from the elements list
     pdf_template.build(elements)
@@ -102,6 +93,17 @@ def report(request):
     buffer.seek(0)
     # return the buffer as a file response
     return FileResponse(buffer, as_attachment=True, filename="Geo_Report.pdf", content_type="application/pdf", status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+def authenticate_user(request):
+    token = request.data
+    try:
+        # idinfo contains all of the information from the user being authenticated
+        idinfo = id_token.verify_oauth2_token(token, requests.Request(), "91335092244-a8nui54bma999p0f0f61uklj8095v6cl.apps.googleusercontent.com")
+        return Response(idinfo,status=status.HTTP_200_OK)
+    except ValueError as e:
+        # Invalid token
+        return Response(data=str(e),status=status.HTTP_401_UNAUTHORIZED)
 
 #@api_view(['PUT', 'DELETE'])
 #def soils_detail(request, pk):
