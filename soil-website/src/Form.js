@@ -35,27 +35,31 @@ class Form extends React.Component {
 
 
     handleSubmit(event) {
+        event.preventDefault();
         console.log(JSON.stringify(this.state, null, 2));
         // TODO: Get correct path for dev/prod on fetch requests.
         fetch('http://localhost:8000/report/', {
-            method: 'GET',
+            method: 'POST',
             headers: {
-                'Content-Type': 'application/pdf'
-            }
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(this.state)
         })
-            .then(res => res.blob())
-            .then(blob => {
-                var file = window.URL.createObjectURL(blob);
-                var a = document.createElement('a');
-                a.href = file;
-                a.download = 'Soil_Stabilizer_Report.pdf';
-                document.body.appendChild(a);
-                a.click();
-                setTimeout(() => {
-                    a.remove();
-                    window.URL.revokeObjectURL(file);
-                }, 1000)
-            });
+            //.then(res => console.log(res.json()))
+            //.then(data => console.log(data))
+        .then(res => res.blob())
+        .then(blob => {
+            var file = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = file;
+            a.download = 'Soil_Stabilizer_Report.pdf';
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+                a.remove();
+                window.URL.revokeObjectURL(file);
+            }, 1000)
+        });
     }
 
     render() {
@@ -143,35 +147,51 @@ class Form extends React.Component {
                         </div>
                         <span>
                             <h2>Result Types</h2>
-                            <label> Cement Stabilization
+                            <label>Cement Stabilization
                         <input
                                     name="cementStabilize"
                                     type="checkbox"
-                                    checked={this.state.limeCementStabilize}
+                                    checked={this.state.cementStabilize}
                                     onChange={this.handleInputChange} />
                             </label>
                             <br />
-                            <label> Dose of Cement
+                            <label>Dose of Cement
                         <input
                                     name="cementDose"
                                     type="checkbox"
-                                    checked={this.state.limeCementDose}
+                                    checked={this.state.cementDose}
                                     onChange={this.handleInputChange} />
                             </label>
                             <br />
-                            <label> Lime Stabilization
+                            <label>Lime Stabilization
                         <input
-                                    name="limeCementStabilize"
+                                    name="limeStabilize"
                                     type="checkbox"
                                     checked={this.state.limeStabilize}
                                     onChange={this.handleInputChange} />
                             </label>
                             <br />
-                            <label> Dose of Lime
+                            <label>Dose of Lime
                         <input
-                                    name="limeCementDose"
+                                    name="limeDose"
                                     type="checkbox"
                                     checked={this.state.limeDose}
+                                    onChange={this.handleInputChange} />
+                            </label>
+                            <br />
+                            <label>Quantitative Result
+                                <input
+                                    name="qualResult"
+                                    type="checkbox"
+                                    checked={this.state.qualResult}
+                                    onChange={this.handleInputChange} />
+                            </label>
+                            <br />
+                            <label>Qualitative Result
+                                <input
+                                    name="quantResult"
+                                    type="checkbox"
+                                    checked={this.state.quantResult}
                                     onChange={this.handleInputChange} />
                             </label>
                             <br />
