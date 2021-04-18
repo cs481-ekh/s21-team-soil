@@ -20,8 +20,8 @@ from MySQLdb import _mysql
 from .models import soil_sample
 from .serializers import *
 from ..settings import DATABASES
-from ...data_object import soil_object
-from ...soil_analyzer import soil_analyzer
+from data_object import soil_object
+from soil_analyzer import soil_analyzer
 
 import json
 
@@ -100,10 +100,32 @@ def get_report(request):
 @api_view(['POST'])
 def authenticate_user(request):
     token = request.data
+    dbinfo=DATABASES['default']
+    db=_mysql.connect(host=dbinfo['HOST'], user=dbinfo['USER'], passwd=dbinfo['PASSWORD'], db="dev_box")
     try:
         # idinfo contains all of the information from the user being authenticated
         idinfo = id_token.verify_oauth2_token(token, requests.Request(), "91335092244-a8nui54bma999p0f0f61uklj8095v6cl.apps.googleusercontent.com")
-        return Response(idinfo,status=status.HTTP_200_OK)
+        firstName=idinfo['given_name']
+        lastName=idinfo['family_name']
+        email=idinfo['email']
+        check="""SELECT * FROM auth_user WHERE email = "{email}" """.format(email=email)
+        db.query(check)
+        qr=db.store_result()
+        qr=len(qr.fetch_row(maxrows=0))
+        if (qr > 0):
+            query="""UPDATE auth_user SET last_login = CURRENT_TIMESTAMP"""
+            db.query(query)
+        else:
+            query="""INSERT INTO auth_user (first_name, last_name, email, last_login) VALUES ("{fn}", "{ln}", "{email}", CURRENT_TIMESTAMP)""".format(fn=firstName,ln=lastName,email=email)
+            db.query(query)
+
+        db.close()
+        return Response(status=status.HTTP_200_OK)
     except ValueError as e:
         # Invalid token
+        db.close()
         return Response(data=str(e),status=status.HTTP_401_UNAUTHORIZED)
+    except Exception as e:
+        # Some other error - most likely related to the DB connection/execution
+        db.close()
+        return Response(data=str(e),status=status.HTTP_500_INTERNAL_SERVER_ERROR)
