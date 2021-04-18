@@ -15,10 +15,13 @@ from reportlab.lib import colors
 from google.oauth2 import id_token
 from google.auth.transport import requests
 
+from MySQLdb import _mysql
+
 from .models import soil_sample
 from .serializers import *
-from data_object import soil_object
-from soil_analyzer import soil_analyzer
+from ..settings import DATABASES
+from ...data_object import soil_object
+from ...soil_analyzer import soil_analyzer
 
 import json
 
@@ -104,21 +107,3 @@ def authenticate_user(request):
     except ValueError as e:
         # Invalid token
         return Response(data=str(e),status=status.HTTP_401_UNAUTHORIZED)
-
-#@api_view(['PUT', 'DELETE'])
-#def soils_detail(request, pk):
-#    try:
-#        soil = Soil.objects.get(pk=pk)
-#    except Soil.DoesNotExist:
-#        return Response(status=status.HTTP_404_NOT_FOUND)
-#
-#    if request.method == 'PUT':
-#        serializer = SoilSerializer(soil, data=request.data,context={'request': request})
-#        if serializer.is_valid():
-#            serializer.save()
-#            return Response(status=status.HTTP_204_NO_CONTENT)
-#        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#
-#    elif request.method == 'DELETE':
-#        soil.delete()
-#        return Response(status=status.HTTP_204_NO_CONTENT)
