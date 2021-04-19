@@ -21,6 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('report/', views.get_report),
     path('authenticate/', views.authenticate_user),
+    path('userlist/', views.get_users),
     #re_path(r'^api/soil/insert_soil_sample/$', views.insert_soil_sample),
     path('user_tracking/', include('user_tracking.urls')),
 ]

@@ -28,6 +28,9 @@ import json
 #import rpy2
 #from rpy2.rinterface import R_VERSION_BUILD
 
+# MySQLdb reference: https://mysqlclient.readthedocs.io/user_guide.html
+# ReportLab Reference: https://www.reportlab.com/docs/reportlab-userguide.pdf
+
 @api_view(['POST'])
 def get_report(request):
 
@@ -55,7 +58,7 @@ def get_report(request):
         
     buffer = BytesIO()
 
-    # Reference: https://www.reportlab.com/docs/reportlab-userguide.pdf
+    
     pdf_template = SimpleDocTemplate(buffer,
                                      rightMargin=72,
                                      leftMargin=72,
@@ -111,8 +114,8 @@ def authenticate_user(request):
         check="""SELECT * FROM auth_user WHERE email = "{email}" """.format(email=email)
         db.query(check)
         qr=db.store_result()
-        qr=len(qr.fetch_row(maxrows=0))
-        if (qr > 0):
+        qr=qr.fetch_row(maxrows=0)
+        if (len(qr) > 0):
             query="""UPDATE auth_user SET last_login = CURRENT_TIMESTAMP"""
             db.query(query)
         else:
@@ -120,11 +123,28 @@ def authenticate_user(request):
             db.query(query)
 
         db.close()
-        return Response(status=status.HTTP_200_OK)
+        return Response(data=qr,status=status.HTTP_200_OK)
     except ValueError as e:
         # Invalid token
         db.close()
         return Response(data=str(e),status=status.HTTP_401_UNAUTHORIZED)
+    except Exception as e:
+        # Some other error - most likely related to the DB connection/execution
+        db.close()
+        return Response(data=str(e),status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['GET'])
+def get_users(request):
+    dbinfo=DATABASES['default']
+    db=_mysql.connect(host=dbinfo['HOST'], user=dbinfo['USER'], passwd=dbinfo['PASSWORD'], db="dev_box")
+    try:
+        query="""SELECT first_name,last_name,email,last_login FROM auth_user ORDER BY last_login DESC"""
+        db.query(query)
+        qr=db.store_result()
+        qr=qr.fetch_row(maxrows=0,how=1)
+        db.close()
+        return Response(data=qr,status=status.HTTP_200_OK)
     except Exception as e:
         # Some other error - most likely related to the DB connection/execution
         db.close()

@@ -36,7 +36,7 @@ class Form extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log(JSON.stringify(this.state, null, 2));
+        //console.log(JSON.stringify(this.state, null, 2));
         // TODO: Get correct path for dev/prod on fetch requests.
         fetch('http://localhost:8000/report/', {
             method: 'POST',
@@ -45,8 +45,6 @@ class Form extends React.Component {
             },
             body: JSON.stringify(this.state)
         })
-            //.then(res => console.log(res.json()))
-            //.then(data => console.log(data))
         .then(res => res.blob())
         .then(blob => {
             var file = window.URL.createObjectURL(blob);
