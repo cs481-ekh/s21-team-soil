@@ -32,10 +32,6 @@ class ExcelReader extends Component {
                   const data = XLSX.utils.sheet_to_json(ws);
                   this.setState({ data: data, cols: make_cols(ws['!ref']) }, () => {
 
-                      /* Check data integrity in browser */
-
-                      console.log(JSON.stringify(this.state.data, null, 2));
-
                       this.props.handleFile(this.state.data);
 
                   });

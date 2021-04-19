@@ -62,7 +62,6 @@ class Form extends React.Component {
     }
 
     handleDataFileChange(event) {
-        console.log(event);
         this.setState({ dataFile: event });
     }
 

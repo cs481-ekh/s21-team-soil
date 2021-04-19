@@ -105,7 +105,6 @@ def get_report(request):
     headers = ["LL", "PL", "Clay %", "Silt %", "Sand %", "O.C. %", "Stabilizer", "Lime Reg.", "Cement Reg.", "Lime Cl.", "Cement Cl."]
     data = []
 
-    #data = [request.data['liquidLimit'], request.data['plasticIndex'], request.data['clayPercent'], request.data['siltPercent'], request.data['sandPercent'], request.data['organicContent'], request.data['stabilize'], round(results['limeRegression'],4), round(results['cementRegression'],4), round(results['limeClassification'],4), round(results['cementClassification'],4)]
     tableData = [headers]
     for i in range(len(soil)):
         tableData.append([soil[i].liquidLimit, soil[i].plasticIndex, soil[i].clayPercent, soil[i].siltPercent, soil[i].sandPercent, soil[i].organicContent, soil[i].stabilizer, round(results['limeRegression'][i],4), round(results['cementRegression'][i],4), round(results['limeClassification'][i],4), round(results['cementClassification'][i],4)])
