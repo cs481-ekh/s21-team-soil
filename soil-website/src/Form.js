@@ -21,6 +21,7 @@ class Form extends React.Component {
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDataFileChange = this.handleDataFileChange.bind(this);
     }
 
     handleInputChange(event) {
@@ -60,6 +61,11 @@ class Form extends React.Component {
         });
     }
 
+    handleDataFileChange(event) {
+        console.log(event);
+        this.setState({ dataFile: event });
+    }
+
     render() {
         return (
             <div className="center-border">
@@ -71,7 +77,7 @@ class Form extends React.Component {
                         <div className="row">
 
                             <div className="column">
-                                <ExcelReader />
+                                <ExcelReader handleFile={this.handleDataFileChange} />
                             </div>
                             <div className="column">
                                 <label>

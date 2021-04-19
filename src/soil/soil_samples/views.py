@@ -23,6 +23,7 @@ from ..settings import DATABASES
 from data_object import soil_object
 from soil_analyzer import soil_analyzer
 
+import sys
 import json
 
 #import rpy2
@@ -39,13 +40,13 @@ def get_report(request):
     
     # If the array is empty, use the manually input fields as input to data_object. Otherwise, use the contents
     # from the array.
-    soil = None
+    soil = []
     
     if not file_array: 
-        soil = soil_object(request.data['dataFile'], request.data['liquidLimit'], request.data['plasticIndex'], request.data['clayPercent'], request.data['siltPercent'], request.data['sandPercent'], request.data['organicContent'], request.data['stabilize'], request.data['limeDose'], request.data['cementDose'], request.data['quantResult'], request.data['qualResult'])
+        soil.append(soil_object(request.data['dataFile'], request.data['liquidLimit'], request.data['plasticIndex'], request.data['clayPercent'], request.data['siltPercent'], request.data['sandPercent'], request.data['organicContent'], request.data['stabilize'], request.data['limeDose'], request.data['cementDose'], request.data['quantResult'], request.data['qualResult']))
     else:
         for sample in file_array:
-            soil = soil_object(sample['dataFile'], sample['liquidLimit'], sample['plasticIndex'], sample['clayPercent'], sample['siltPercent'], sample['sandPercent'], sample['organicContent'], sample['stabilize'], sample['limeDose'], request.data['cementDose'], sample['quantResult'], sample['qualResult'])
+            soil.append(soil_object([], sample['liquidLimit'], sample['plasticIndex'], sample['clayPercent'], sample['siltPercent'], sample['sandPercent'], sample['organicContent'], sample['stabilize'], request.data['limeDose'], request.data['cementDose'], request.data['quantResult'], request.data['qualResult']))
             
     # create predictor object
     analyzer = soil_analyzer()
@@ -54,17 +55,25 @@ def get_report(request):
             
     if (request.data['qualResult'] == True):
         if request.data['limeDose'] == True:
-            result = analyzer.lime_regression(soil)
+            result = []
+            for data in soil:
+                result.append(analyzer.lime_regression(data))
             results["limeRegression"] = result
         if request.data['cementDose'] == True:
-            result = analyzer.cement_regression(soil)
+            result = []
+            for data in soil:
+                result.append(analyzer.cement_regression(data))
             results["cementRegression"] = result
     if(request.data['quantResult'] == True):
         if request.data['limeDose'] == True:
-            result = analyzer.lime_classification(soil)
+            result = []
+            for data in soil:
+                result.append(analyzer.lime_classification(data))
             results["limeClassification"] = result
         if request.data['cementDose'] == True:
-            result = analyzer.cement_classification(soil)
+            result = []
+            for data in soil:
+                result.append(analyzer.cement_classification(data))
             results["cementClassification"] = result
         
     buffer = BytesIO()
@@ -85,7 +94,8 @@ def get_report(request):
 
     headerStyle = ParagraphStyle('HEADER', alignment=1, fontSize=16, spaceAfter=16)
     ts = TableStyle([
-        ('FONTSIZE', (0,0), (10,1), 8),
+        # TableStyle Command, followed by 2 x,y tuples describing the start/end points, followed by the command args
+        ('FONTSIZE', (0,0), (10,len(soil)), 8),
         ('BACKGROUND', (0,0), (10,0), colors.HexColor("#cccccc"))
     ])
 
@@ -93,8 +103,12 @@ def get_report(request):
     p1 = Paragraph("<b>Statistical Soil Stabilizer Report</b>", headerStyle)
 
     headers = ["LL", "PL", "Clay %", "Silt %", "Sand %", "O.C. %", "Stabilizer", "Lime Reg.", "Cement Reg.", "Lime Cl.", "Cement Cl."]
-    data = [request.data['liquidLimit'], request.data['plasticIndex'], request.data['clayPercent'], request.data['siltPercent'], request.data['sandPercent'], request.data['organicContent'], request.data['stabilize'], round(results['limeRegression'],4), round(results['cementRegression'],4), round(results['limeClassification'],4), round(results['cementClassification'],4)]
-    tableData = [headers,data]
+    data = []
+
+    #data = [request.data['liquidLimit'], request.data['plasticIndex'], request.data['clayPercent'], request.data['siltPercent'], request.data['sandPercent'], request.data['organicContent'], request.data['stabilize'], round(results['limeRegression'],4), round(results['cementRegression'],4), round(results['limeClassification'],4), round(results['cementClassification'],4)]
+    tableData = [headers]
+    for i in range(len(soil)):
+        tableData.append([soil[i].liquidLimit, soil[i].plasticIndex, soil[i].clayPercent, soil[i].siltPercent, soil[i].sandPercent, soil[i].organicContent, soil[i].stabilizer, round(results['limeRegression'][i],4), round(results['cementRegression'][i],4), round(results['limeClassification'][i],4), round(results['cementClassification'][i],4)])
 
     t1 = Table(tableData)
 
