@@ -15,8 +15,11 @@ from reportlab.lib import colors
 from google.oauth2 import id_token
 from google.auth.transport import requests
 
+from MySQLdb import _mysql
+
 from .models import soil_sample
 from .serializers import *
+from ..settings import DATABASES
 from data_object import soil_object
 from soil_analyzer import soil_analyzer
 
@@ -24,6 +27,9 @@ import json
 
 #import rpy2
 #from rpy2.rinterface import R_VERSION_BUILD
+
+# MySQLdb reference: https://mysqlclient.readthedocs.io/user_guide.html
+# ReportLab Reference: https://www.reportlab.com/docs/reportlab-userguide.pdf
 
 @api_view(['POST'])
 def get_report(request):
@@ -63,7 +69,7 @@ def get_report(request):
         
     buffer = BytesIO()
 
-    # Reference: https://www.reportlab.com/docs/reportlab-userguide.pdf
+    
     pdf_template = SimpleDocTemplate(buffer,
                                      rightMargin=72,
                                      leftMargin=72,
@@ -108,28 +114,49 @@ def get_report(request):
 @api_view(['POST'])
 def authenticate_user(request):
     token = request.data
+    dbinfo=DATABASES['default']
+    db=_mysql.connect(host=dbinfo['HOST'], user=dbinfo['USER'], passwd=dbinfo['PASSWORD'], db="dev_box")
     try:
         # idinfo contains all of the information from the user being authenticated
         idinfo = id_token.verify_oauth2_token(token, requests.Request(), "91335092244-a8nui54bma999p0f0f61uklj8095v6cl.apps.googleusercontent.com")
-        return Response(idinfo,status=status.HTTP_200_OK)
+        firstName=idinfo['given_name']
+        lastName=idinfo['family_name']
+        email=idinfo['email']
+        check="""SELECT * FROM auth_user WHERE email = "{email}" """.format(email=email)
+        db.query(check)
+        qr=db.store_result()
+        qr=qr.fetch_row(maxrows=0)
+        if (len(qr) > 0):
+            query="""UPDATE auth_user SET last_login = CURRENT_TIMESTAMP"""
+            db.query(query)
+        else:
+            query="""INSERT INTO auth_user (first_name, last_name, email, last_login) VALUES ("{fn}", "{ln}", "{email}", CURRENT_TIMESTAMP)""".format(fn=firstName,ln=lastName,email=email)
+            db.query(query)
+
+        db.close()
+        return Response(data=qr,status=status.HTTP_200_OK)
     except ValueError as e:
         # Invalid token
+        db.close()
         return Response(data=str(e),status=status.HTTP_401_UNAUTHORIZED)
+    except Exception as e:
+        # Some other error - most likely related to the DB connection/execution
+        db.close()
+        return Response(data=str(e),status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-#@api_view(['PUT', 'DELETE'])
-#def soils_detail(request, pk):
-#    try:
-#        soil = Soil.objects.get(pk=pk)
-#    except Soil.DoesNotExist:
-#        return Response(status=status.HTTP_404_NOT_FOUND)
-#
-#    if request.method == 'PUT':
-#        serializer = SoilSerializer(soil, data=request.data,context={'request': request})
-#        if serializer.is_valid():
-#            serializer.save()
-#            return Response(status=status.HTTP_204_NO_CONTENT)
-#        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#
-#    elif request.method == 'DELETE':
-#        soil.delete()
-#        return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def get_users(request):
+    dbinfo=DATABASES['default']
+    db=_mysql.connect(host=dbinfo['HOST'], user=dbinfo['USER'], passwd=dbinfo['PASSWORD'], db="dev_box")
+    try:
+        query="""SELECT first_name,last_name,email,last_login FROM auth_user ORDER BY last_login DESC"""
+        db.query(query)
+        qr=db.store_result()
+        qr=qr.fetch_row(maxrows=0,how=1)
+        db.close()
+        return Response(data=qr,status=status.HTTP_200_OK)
+    except Exception as e:
+        # Some other error - most likely related to the DB connection/execution
+        db.close()
+        return Response(data=str(e),status=status.HTTP_500_INTERNAL_SERVER_ERROR)
