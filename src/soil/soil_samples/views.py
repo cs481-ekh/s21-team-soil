@@ -93,6 +93,8 @@ def get_report(request):
     elements = []
 
     headerStyle = ParagraphStyle('HEADER', alignment=1, fontSize=16, spaceAfter=16)
+    firstNoteStyle = ParagraphStyle('FIRSTNOTE', alignment=0, fontSize=8, spaceBefore=20, spaceAfter=8)
+    noteStyle = ParagraphStyle('NOTE', alignment=0, fontSize=8, spaceAfter=8)
     ts = TableStyle([
         # TableStyle Command, followed by 2 x,y tuples describing the start/end points, followed by the command args
         ('FONTSIZE', (0,0), (10,len(soil)), 8),
@@ -113,8 +115,16 @@ def get_report(request):
 
     t1.setStyle(ts)
 
+    note1 = Paragraph("LL = Liquid Limit", firstNoteStyle)
+    note2 = Paragraph("PL = Plastic Index", noteStyle)
+    note3 = Paragraph("O.C. = Organic Context", noteStyle)
+
     elements.append(p1)
     elements.append(t1)
+
+    elements.append(note1)
+    elements.append(note2)
+    elements.append(note3)
 
     # build the pdf from the elements list
     pdf_template.build(elements)
