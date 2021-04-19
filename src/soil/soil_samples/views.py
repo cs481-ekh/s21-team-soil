@@ -34,7 +34,18 @@ import json
 @api_view(['POST'])
 def get_report(request):
 
-    soil = soil_object(request.data['dataFile'], request.data['liquidLimit'], request.data['plasticIndex'], request.data['clayPercent'], request.data['siltPercent'], request.data['sandPercent'], request.data['organicContent'], request.data['stabilize'], request.data['limeDose'], request.data['cementDose'], request.data['quantResult'], request.data['qualResult'])
+    # create an array representing the dataFile json attribute from the client request
+    file_array = request.data['dataFile']
+    
+    # If the array is empty, use the manually input fields as input to data_object. Otherwise, use the contents
+    # from the array.
+    soil = None
+    
+    if not file_array: 
+        soil = soil_object(request.data['dataFile'], request.data['liquidLimit'], request.data['plasticIndex'], request.data['clayPercent'], request.data['siltPercent'], request.data['sandPercent'], request.data['organicContent'], request.data['stabilize'], request.data['limeDose'], request.data['cementDose'], request.data['quantResult'], request.data['qualResult'])
+    else:
+        for sample in file_array:
+            soil = soil_object(sample['dataFile'], sample['liquidLimit'], sample['plasticIndex'], sample['clayPercent'], sample['siltPercent'], sample['sandPercent'], sample['organicContent'], sample['stabilize'], sample['limeDose'], request.data['cementDose'], sample['quantResult'], sample['qualResult'])
             
     # create predictor object
     analyzer = soil_analyzer()
