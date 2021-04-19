@@ -114,7 +114,7 @@ def authenticate_user(request):
         check="""SELECT * FROM auth_user WHERE email = "{email}" """.format(email=email)
         db.query(check)
         qr=db.store_result()
-        qr=qr.fetch_row(maxrows=0)
+        qr=qr.fetch_row(maxrows=0,how=1)
         if (len(qr) > 0):
             query="""UPDATE auth_user SET last_login = CURRENT_TIMESTAMP"""
             db.query(query)
