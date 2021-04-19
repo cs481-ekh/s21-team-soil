@@ -21,6 +21,7 @@ class Form extends React.Component {
         }
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDataFileChange = this.handleDataFileChange.bind(this);
     }
 
     handleInputChange(event) {
@@ -36,7 +37,7 @@ class Form extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log(JSON.stringify(this.state, null, 2));
+        //console.log(JSON.stringify(this.state, null, 2));
         // TODO: Get correct path for dev/prod on fetch requests.
         fetch('http://localhost:8000/report/', {
             method: 'POST',
@@ -45,8 +46,6 @@ class Form extends React.Component {
             },
             body: JSON.stringify(this.state)
         })
-            //.then(res => console.log(res.json()))
-            //.then(data => console.log(data))
         .then(res => res.blob())
         .then(blob => {
             var file = window.URL.createObjectURL(blob);
@@ -62,6 +61,10 @@ class Form extends React.Component {
         });
     }
 
+    handleDataFileChange(event) {
+        this.setState({ dataFile: event });
+    }
+
     render() {
         return (
             <div className="center-border">
@@ -73,7 +76,7 @@ class Form extends React.Component {
                         <div className="row">
 
                             <div className="column">
-                                <ExcelReader />
+                                <ExcelReader handleFile={this.handleDataFileChange} />
                             </div>
                             <div className="column">
                                 <label>

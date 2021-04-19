@@ -60,6 +60,11 @@ h1:after {
   width: 40%;
 }
 
+.text-center {
+    margin: auto;
+    text-align: center;
+}
+
 .center-google {
     margin: auto;
     width: 94px;
