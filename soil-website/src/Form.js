@@ -150,27 +150,11 @@ class Form extends React.Component {
                         </div>
                         <span>
                             <h2>Result Types</h2>
-                            <label>Cement Stabilization
-                        <input
-                                    name="cementStabilize"
-                                    type="checkbox"
-                                    checked={this.state.cementStabilize}
-                                    onChange={this.handleInputChange} />
-                            </label>
-                            <br />
                             <label>Dose of Cement
                         <input
                                     name="cementDose"
                                     type="checkbox"
                                     checked={this.state.cementDose}
-                                    onChange={this.handleInputChange} />
-                            </label>
-                            <br />
-                            <label>Lime Stabilization
-                        <input
-                                    name="limeStabilize"
-                                    type="checkbox"
-                                    checked={this.state.limeStabilize}
                                     onChange={this.handleInputChange} />
                             </label>
                             <br />
