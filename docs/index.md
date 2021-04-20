@@ -13,14 +13,22 @@ In addition, site owners will be able to track site user behavior. Google sign-i
 The website utilizes form-based input from a user’s uploadable Excel file that includes the data that our algorithms process. The input data is then used in our algorithms to calculate values the user can use in their research, and is available for them to download as a PDF.
 
 Site administrators are able to see who has logged in to the site and how many sessions they have logged.
+
+
 ![Sign In](sign_in.JPG)
-*Google Signin*
+*Google Sign-in*
+
+
 
 ![File Input](file_input.JPG)
 *File Input*
 
+
+
 ![User Sessions](user_sessions.JPG)
 *User Tracking*
+
+
 
 ## Members:
  - Garrett Hansen
