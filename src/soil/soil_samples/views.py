@@ -150,7 +150,7 @@ def authenticate_user(request):
         qr=db.store_result()
         qr=qr.fetch_row(maxrows=0,how=1)
         if (len(qr) > 0):
-            query="""UPDATE auth_user SET last_login = CURRENT_TIMESTAMP"""
+            query="""UPDATE auth_user SET last_login = CURRENT_TIMESTAMP WHERE email = "{email}" """.format(email=email)
             db.query(query)
         else:
             query="""INSERT INTO auth_user (first_name, last_name, email, last_login) VALUES ("{fn}", "{ln}", "{email}", CURRENT_TIMESTAMP)""".format(fn=firstName,ln=lastName,email=email)
