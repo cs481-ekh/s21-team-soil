@@ -104,12 +104,28 @@ def get_report(request):
     # Add the report title
     p1 = Paragraph("<b>Statistical Soil Stabilizer Report</b>", headerStyle)
 
-    headers = ["LL", "PL", "Clay %", "Silt %", "Sand %", "O.C. %", "Stabilizer", "Lime Reg.", "Cement Reg.", "Lime Cl.", "Cement Cl."]
-    data = []
+    headers = ["LL", "PL", "Clay %", "Silt %", "Sand %", "O.C. %", "Stabilizer"]
+    if "limeRegression" in results:
+        headers.append("Lime Reg.")
+    if "cementRegression" in results:
+        headers.append("Cement Reg.")
+    if "limeClassification" in results:
+        headers.append("Lime Cl.")
+    if "cementClassification" in results:
+        headers.append("Cement Cl.")
 
     tableData = [headers]
     for i in range(len(soil)):
-        tableData.append([soil[i].liquidLimit, soil[i].plasticIndex, soil[i].clayPercent, soil[i].siltPercent, soil[i].sandPercent, soil[i].organicContent, soil[i].stabilizer, round(results['limeRegression'][i],4), round(results['cementRegression'][i],4), round(results['limeClassification'][i],4), round(results['cementClassification'][i],4)])
+        current = [soil[i].liquidLimit, soil[i].plasticIndex, soil[i].clayPercent, soil[i].siltPercent, soil[i].sandPercent, soil[i].organicContent, soil[i].stabilizer]
+        if "limeRegression" in results:
+            current.append(round(results['limeRegression'][i],4))
+        if "cementRegression" in results:
+            current.append(round(results['cementRegression'][i],4))
+        if "limeClassification" in results:
+            current.append(round(results['limeClassification'][i],4))
+        if "cementClassification" in results:
+            current.append(round(results['cementClassification'][i],4))
+        tableData.append(current)
 
     t1 = Table(tableData)
 
