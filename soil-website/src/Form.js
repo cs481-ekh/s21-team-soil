@@ -85,8 +85,6 @@ class Form extends React.Component {
                                         name="liquidLimit"
                                         type="number"
                                         value={this.state.liquidLimit}
-                                        min="15"
-                                        max="100"
                                         onChange={this.handleInputChange} />
                                 </label>
                                 <br />
@@ -96,8 +94,6 @@ class Form extends React.Component {
                                         name="plasticIndex"
                                         type="number"
                                         value={this.state.plasticIndex}
-                                        min="10"
-                                        max="70"
                                         onChange={this.handleInputChange} />
                                 </label>
                                 <br />
