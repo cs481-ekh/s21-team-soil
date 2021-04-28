@@ -24,4 +24,3 @@ You will need to follow the instructions and also initiate the commands listed a
 
 # Debugging
     -If any issues arise while trying to run this program, contact Jonathan Demaree at jonathandemaree@u.boisestate.edu (or PM me in Slack)
-    -I'm not 100% sure that I included all the necessary node_modules, dependencies and libraries that I use. If issues keep arising I will just commit the entirety of my project, minus IDE files

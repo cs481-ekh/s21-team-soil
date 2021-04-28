@@ -104,7 +104,7 @@ def get_report(request):
     # Add the report title
     p1 = Paragraph("<b>Statistical Soil Stabilizer Report</b>", headerStyle)
 
-    headers = ["LL", "PL", "Clay %", "Silt %", "Sand %", "O.C. %", "Stabilizer"]
+    headers = ["LL", "PL", "Clay %", "Silt %", "Sand %", "O.C. %", "Stabilizer %"]
     if "limeRegression" in results:
         headers.append("Lime Reg.")
     if "cementRegression" in results:

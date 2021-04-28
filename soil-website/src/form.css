@@ -41,11 +41,26 @@ span {
 }
 label {
     display: inline-block;
-    width: 200px;
+    width: 185px;
+}
+
+.resultLabel {
+    text-align: left;
+    width: 160px;
+}
+
+.resultLabel > input {
+    float: right;
 }
 
 input {
     display: inline-block;
+}
+
+input[type="number"] {
+    display: inline-block;
+    width: 175px;
+    padding: 3px;
 }
 
 .form-control {

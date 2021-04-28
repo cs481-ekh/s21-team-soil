@@ -85,7 +85,6 @@ class Form extends React.Component {
                                         name="liquidLimit"
                                         type="number"
                                         value={this.state.liquidLimit}
-                                        max="3"
                                         onChange={this.handleInputChange} />
                                 </label>
                                 <br />
@@ -145,12 +144,12 @@ class Form extends React.Component {
                                         type="number"
                                         value={this.state.stabilize}
                                         onChange={this.handleInputChange} />
-                                </label>
+                                </label>&nbsp;%
                             </div>
                         </div>
                         <span>
                             <h2>Result Types</h2>
-                            <label>Dose of Cement
+                            <label class="resultLabel">Dose of Cement
                         <input
                                     name="cementDose"
                                     type="checkbox"
@@ -158,7 +157,7 @@ class Form extends React.Component {
                                     onChange={this.handleInputChange} />
                             </label>
                             <br />
-                            <label>Dose of Lime
+                            <label class="resultLabel">Dose of Lime
                         <input
                                     name="limeDose"
                                     type="checkbox"
@@ -166,7 +165,7 @@ class Form extends React.Component {
                                     onChange={this.handleInputChange} />
                             </label>
                             <br />
-                            <label>Quantitative Result
+                            <label class="resultLabel">Quantitative Result
                                 <input
                                     name="qualResult"
                                     type="checkbox"
@@ -174,7 +173,7 @@ class Form extends React.Component {
                                     onChange={this.handleInputChange} />
                             </label>
                             <br />
-                            <label>Qualitative Result
+                            <label class="resultLabel">Qualitative Result
                                 <input
                                     name="quantResult"
                                     type="checkbox"
